@@ -1,0 +1,59 @@
+{
+  "PackId": "Shane",
+  "DisplayName": "Shane Dialogue",
+  "Entries": [
+    {
+      "Key": "shane_greet_regressed_gruff",
+      "Text": "Whatever you're doing, just... be careful, okay?",
+      "Conditions": {
+        "RegressionStages": [ "little", "middle" ],
+        "MinFriendshipHearts": 3,
+        "NpcPersonalityTags": [ "neutral", "embarrassed" ]
+      },
+      "Weight": 2,
+      "CooldownDays": 2
+    },
+    {
+      "Key": "shane_greet_baby_unexpected_soft",
+      "Text": "Hey, little one. You doing okay? ...Good.",
+      "Conditions": {
+        "RegressionStages": [ "baby" ],
+        "MinFriendshipHearts": 6
+      },
+      "Weight": 2,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "shane_diaper_uncomfortable",
+      "Text": "I, uh... didn't see anything. We're good.",
+      "Conditions": {
+        "IsWearingDiaper": true,
+        "MinFriendshipHearts": 2,
+        "MaxFriendshipHearts": 6,
+        "NpcPersonalityTags": [ "embarrassed" ]
+      },
+      "Weight": 2,
+      "CooldownDays": 5
+    },
+    {
+      "Key": "shane_diaper_acceptance",
+      "Text": "Look, I've got my own stuff. You've got yours. No judgment.",
+      "Conditions": {
+        "IsWearingDiaper": true,
+        "MinFriendshipHearts": 7
+      },
+      "Weight": 2,
+      "CooldownDays": 3
+    },
+    {
+      "Key": "shane_low_comfort_empathy",
+      "Text": "You look like you're having a rough one. I know how that feels. Hang in there.",
+      "Conditions": {
+        "MaxComfortNormalized": 0.3,
+        "MinFriendshipHearts": 5
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+[
+  {
+    "Id": "pacifier",
+    "DisplayName": "Pacifier",
+    "Description": "A soothing pacifier. Very comforting.",
+    "Slot": "pacifier",
+    "ComfortBonus": 8.0,
+    "SpeedModifier": 1.0,
+    "MinStageOrder": 0,
+    "Price": 30,
+    "SpriteIndex": 0
+  },
+  {
+    "Id": "bottle",
+    "DisplayName": "Baby Bottle",
+    "Description": "A cute bottle. Filled with something warm.",
+    "Slot": "bottle",
+    "ComfortBonus": 5.0,
+    "SpeedModifier": 1.0,
+    "MinStageOrder": 0,
+    "Price": 25,
+    "SpriteIndex": 1
+  },
+  {
+    "Id": "mittens",
+    "DisplayName": "Baby Mittens",
+    "Description": "Soft mittens. Make it harder to grip things.",
+    "Slot": "mittens",
+    "ComfortBonus": 3.0,
+    "SpeedModifier": 1.0,
+    "MinStageOrder": 1,
+    "Price": 20,
+    "SpriteIndex": 2
+  },
+  {
+    "Id": "bib",
+    "DisplayName": "Bib",
+    "Description": "A cute bib with a little duck on it.",
+    "Slot": "bib",
+    "ComfortBonus": 2.0,
+    "SpeedModifier": 1.0,
+    "MinStageOrder": 0,
+    "Price": 15,
+    "SpriteIndex": 3
+  },
+  {
+    "Id": "plushie_bunny",
+    "DisplayName": "Bunny Plushie",
+    "Description": "A soft bunny plushie. Very huggable.",
+    "Slot": "plushie",
+    "ComfortBonus": 10.0,
+    "SpeedModifier": 0.95,
+    "MinStageOrder": 0,
+    "Price": 50,
+    "SpriteIndex": 4
+  }
+]

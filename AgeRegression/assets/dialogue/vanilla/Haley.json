@@ -1,0 +1,70 @@
+{
+  "PackId": "Haley",
+  "DisplayName": "Haley Dialogue",
+  "Entries": [
+    {
+      "Key": "haley_greet_regressed_dismissive",
+      "Text": "You're acting weird today. Like, weirder than usual.",
+      "Conditions": {
+        "RegressionStages": [ "little", "middle" ],
+        "MinFriendshipHearts": 1,
+        "MaxFriendshipHearts": 4,
+        "NpcPersonalityTags": [ "teasing", "embarrassed" ]
+      },
+      "Weight": 2,
+      "CooldownDays": 3
+    },
+    {
+      "Key": "haley_greet_regressed_warmed_up",
+      "Text": "Okay, I'll admit it's kind of cute. Don't tell anyone I said that.",
+      "Conditions": {
+        "RegressionStages": [ "little", "middle" ],
+        "MinFriendshipHearts": 7
+      },
+      "Weight": 2,
+      "CooldownDays": 2
+    },
+    {
+      "Key": "haley_diaper_embarrassed",
+      "Text": "Oh my— okay. I did NOT see that. We are never speaking of this.",
+      "Conditions": {
+        "IsWearingDiaper": true,
+        "MinFriendshipHearts": 1,
+        "MaxFriendshipHearts": 5,
+        "NpcPersonalityTags": [ "embarrassed" ]
+      },
+      "Weight": 2,
+      "CooldownDays": 5
+    },
+    {
+      "Key": "haley_diaper_softened",
+      "Text": "Look, I don't get it, but... you seem happy. That's what matters, I guess.",
+      "Conditions": {
+        "IsWearingDiaper": true,
+        "MinFriendshipHearts": 8
+      },
+      "Weight": 2,
+      "CooldownDays": 3
+    },
+    {
+      "Key": "haley_low_comfort_surprised",
+      "Text": "Hey, are you actually upset? I... I'm sorry. Do you want to talk?",
+      "Conditions": {
+        "MaxComfortNormalized": 0.25,
+        "MinFriendshipHearts": 6
+      },
+      "Weight": 2,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "haley_pacifier_photo",
+      "Text": "Oh wow. That is... actually really photogenic. Can I take a picture?",
+      "Conditions": {
+        "RequiredAccessories": [ "pacifier" ],
+        "MinFriendshipHearts": 5
+      },
+      "Weight": 1,
+      "CooldownDays": 5
+    }
+  ]
+}

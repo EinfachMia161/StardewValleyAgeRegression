@@ -1,0 +1,73 @@
+{
+  "PackId": "Sebastian_spouse",
+  "DisplayName": "Sebastian Spouse Dialogue",
+  "Entries": [
+    {
+      "Key": "sebastian_spouse_morning_little",
+      "Text": "Morning. You're in little mode today, huh? That's fine. I'll be here.",
+      "Conditions": {
+        "RegressionStages": [ "little", "middle" ],
+        "IsMarried": true,
+        "TimeFrom": 600,
+        "TimeTo": 1000
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "sebastian_spouse_morning_baby",
+      "Text": "Hey, little one. I've got you. You don't have to do anything today.",
+      "Conditions": {
+        "RegressionStages": [ "baby" ],
+        "IsMarried": true,
+        "TimeFrom": 600,
+        "TimeTo": 1000
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "sebastian_spouse_diaper_matter_of_fact",
+      "Text": "Hey. I noticed. Come here, let me help.",
+      "Conditions": {
+        "IsMarried": true,
+        "IsWearingDiaper": true,
+        "DiaperConditions": [ "wet", "soaked" ]
+      },
+      "Weight": 3,
+      "CooldownDays": 0
+    },
+    {
+      "Key": "sebastian_spouse_comfort_low",
+      "Text": "You're not okay. I can tell. Come sit with me. We can just exist for a while.",
+      "Conditions": {
+        "IsMarried": true,
+        "MaxComfortNormalized": 0.3
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "sebastian_spouse_comfort_high",
+      "Text": "You seem... happy. Good. You deserve that.",
+      "Conditions": {
+        "IsMarried": true,
+        "MinComfortNormalized": 0.8
+      },
+      "Weight": 2,
+      "CooldownDays": 2
+    },
+    {
+      "Key": "sebastian_spouse_night_gaming",
+      "Text": "Still up? Want to play something together? I'll let you pick.",
+      "Conditions": {
+        "IsMarried": true,
+        "RegressionStages": [ "little", "middle" ],
+        "TimeFrom": 2000,
+        "TimeTo": 2400
+      },
+      "Weight": 2,
+      "CooldownDays": 2
+    }
+  ]
+}

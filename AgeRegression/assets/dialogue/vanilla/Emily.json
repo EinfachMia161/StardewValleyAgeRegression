@@ -1,0 +1,68 @@
+{
+  "PackId": "Emily",
+  "DisplayName": "Emily Dialogue",
+  "Entries": [
+    {
+      "Key": "emily_greet_little_warm",
+      "Text": "Oh, {PlayerName}! You have such a soft energy today. I love it.",
+      "Conditions": {
+        "RegressionStages": [ "little" ],
+        "MinFriendshipHearts": 3,
+        "NpcPersonalityTags": [ "caring" ]
+      },
+      "Weight": 3,
+      "CooldownDays": 2
+    },
+    {
+      "Key": "emily_greet_baby_nurturing",
+      "Text": "Hello, little one! The universe is sending you so much love right now. Can you feel it?",
+      "Conditions": {
+        "RegressionStages": [ "baby" ],
+        "MinFriendshipHearts": 4
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "emily_diaper_accepting",
+      "Text": "I think it's beautiful that you're so comfortable with yourself. Truly.",
+      "Conditions": {
+        "IsWearingDiaper": true,
+        "MinFriendshipHearts": 5,
+        "NpcPersonalityTags": [ "caring", "supportive" ]
+      },
+      "Weight": 2,
+      "CooldownDays": 3
+    },
+    {
+      "Key": "emily_pacifier_delighted",
+      "Text": "Oh! That's adorable. I actually have some fabric that would make the cutest matching outfit.",
+      "Conditions": {
+        "RequiredAccessories": [ "pacifier" ],
+        "MinFriendshipHearts": 4
+      },
+      "Weight": 2,
+      "CooldownDays": 4
+    },
+    {
+      "Key": "emily_low_comfort_spiritual",
+      "Text": "Your aura looks a little dim today. Let me make you some tea. Chamomile, I think.",
+      "Conditions": {
+        "MaxComfortNormalized": 0.35,
+        "MinFriendshipHearts": 4
+      },
+      "Weight": 2,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "emily_plushie_crafty",
+      "Text": "Is that a handmade plushie? The stitching is wonderful. Did you make it yourself?",
+      "Conditions": {
+        "RequiredAccessories": [ "plushie_bunny" ],
+        "MinFriendshipHearts": 3
+      },
+      "Weight": 1,
+      "CooldownDays": 5
+    }
+  ]
+}

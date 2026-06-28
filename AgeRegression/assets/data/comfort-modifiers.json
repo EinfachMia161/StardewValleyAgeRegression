@@ -1,0 +1,156 @@
+[
+  {
+    "Id": "diaper_clean",
+    "Description": "Wearing a clean diaper",
+    "ValuePerHour": 3.0,
+    "ImmediateValue": 0.0,
+    "Conditions": {
+      "IsWearingDiaper": true,
+      "DiaperConditions": [ "clean" ]
+    },
+    "Priority": 10
+  },
+  {
+    "Id": "diaper_damp",
+    "Description": "Wearing a damp diaper",
+    "ValuePerHour": -2.0,
+    "ImmediateValue": 0.0,
+    "Conditions": {
+      "IsWearingDiaper": true,
+      "DiaperConditions": [ "damp" ]
+    },
+    "Priority": 10
+  },
+  {
+    "Id": "diaper_wet",
+    "Description": "Wearing a wet diaper",
+    "ValuePerHour": -6.0,
+    "ImmediateValue": -5.0,
+    "Conditions": {
+      "IsWearingDiaper": true,
+      "DiaperConditions": [ "wet" ]
+    },
+    "Priority": 10
+  },
+  {
+    "Id": "diaper_soaked",
+    "Description": "Wearing a soaked diaper",
+    "ValuePerHour": -15.0,
+    "ImmediateValue": -10.0,
+    "Conditions": {
+      "IsWearingDiaper": true,
+      "DiaperConditions": [ "soaked" ]
+    },
+    "Priority": 10
+  },
+  {
+    "Id": "pacifier_equipped",
+    "Description": "Wearing a pacifier",
+    "ValuePerHour": 4.0,
+    "ImmediateValue": 3.0,
+    "Conditions": {
+      "RequiredAccessories": [ "pacifier" ]
+    },
+    "Priority": 5
+  },
+  {
+    "Id": "plushie_equipped",
+    "Description": "Carrying a plushie",
+    "ValuePerHour": 3.0,
+    "ImmediateValue": 2.0,
+    "Conditions": {
+      "RequiredAccessories": [ "plushie_bunny" ]
+    },
+    "Priority": 5
+  },
+  {
+    "Id": "continence_struggling",
+    "Description": "Struggling with continence",
+    "ValuePerHour": -8.0,
+    "ImmediateValue": -5.0,
+    "Conditions": {
+      "ContinenceThresholds": [ "struggling" ]
+    },
+    "Priority": 8
+  },
+  {
+    "Id": "continence_loss_of_control",
+    "Description": "Lost continence control",
+    "ValuePerHour": -20.0,
+    "ImmediateValue": -15.0,
+    "Conditions": {
+      "ContinenceThresholds": [ "loss_of_control" ]
+    },
+    "Priority": 9
+  },
+  {
+    "Id": "hungry",
+    "Description": "Feeling hungry",
+    "ValuePerHour": -4.0,
+    "ImmediateValue": 0.0,
+    "Conditions": {
+      "MaxHungerNormalized": 0.3
+    },
+    "Priority": 6
+  },
+  {
+    "Id": "thirsty",
+    "Description": "Feeling thirsty",
+    "ValuePerHour": -4.0,
+    "ImmediateValue": 0.0,
+    "Conditions": {
+      "MaxThirstNormalized": 0.3
+    },
+    "Priority": 6
+  },
+  {
+    "Id": "passive_decay_regressed",
+    "Description": "Passive comfort decay while regressed",
+    "ValuePerHour": -2.0,
+    "ImmediateValue": 0.0,
+    "Conditions": {
+      "RegressionStages": [ "little", "middle", "baby" ]
+    },
+    "Priority": 1
+  },
+  {
+    "Id": "near_crib",
+    "Description": "Near a crib",
+    "ValuePerHour": 8.0,
+    "ImmediateValue": 3.0,
+    "Conditions": {
+      "RegressionStages": [ "little", "middle", "baby" ]
+    },
+    "Priority": 7
+  },
+  {
+    "Id": "near_changing_table",
+    "Description": "Near a changing table",
+    "ValuePerHour": 4.0,
+    "ImmediateValue": 2.0,
+    "Conditions": {
+      "RegressionStages": [ "little", "middle", "baby" ]
+    },
+    "Priority": 6
+  },
+  {
+    "Id": "near_toy_box",
+    "Description": "Near a toy box",
+    "ValuePerHour": 5.0,
+    "ImmediateValue": 2.0,
+    "Conditions": {
+      "RegressionStages": [ "little", "middle", "baby" ]
+    },
+    "Priority": 6
+  },
+  {
+    "Id": "near_playpen",
+    "Description": "Inside the playpen",
+    "ValuePerHour": 12.0,
+    "ImmediateValue": 5.0,
+    "Conditions": {
+      "RegressionStages": [ "little", "middle", "baby" ]
+    },
+    "Priority": 8
+  }
+]

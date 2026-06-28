@@ -1,0 +1,69 @@
+{
+  "PackId": "Sebastian",
+  "DisplayName": "Sebastian Dialogue",
+  "Entries": [
+    {
+      "Key": "sebastian_greet_regressed_minimal",
+      "Text": "Hey.",
+      "Conditions": {
+        "RegressionStages": [ "little", "middle" ],
+        "MinFriendshipHearts": 2,
+        "MaxFriendshipHearts": 5,
+        "NpcPersonalityTags": [ "neutral" ]
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "sebastian_greet_regressed_warmed",
+      "Text": "You seem... different today. In a good way, I think. I don't know. Whatever.",
+      "Conditions": {
+        "RegressionStages": [ "little", "middle" ],
+        "MinFriendshipHearts": 6
+      },
+      "Weight": 2,
+      "CooldownDays": 2
+    },
+    {
+      "Key": "sebastian_greet_baby_rare_warmth",
+      "Text": "Hey, little one. You okay? ...I've got you.",
+      "Conditions": {
+        "RegressionStages": [ "baby" ],
+        "MinFriendshipHearts": 7
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "sebastian_diaper_no_comment",
+      "Text": "I'm not going to say anything. It's your life.",
+      "Conditions": {
+        "IsWearingDiaper": true,
+        "MinFriendshipHearts": 3
+      },
+      "Weight": 2,
+      "CooldownDays": 5
+    },
+    {
+      "Key": "sebastian_low_comfort_solidarity",
+      "Text": "Bad day? Yeah. I get those. You don't have to talk about it.",
+      "Conditions": {
+        "MaxComfortNormalized": 0.3,
+        "MinFriendshipHearts": 5
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "sebastian_winter_regressed",
+      "Text": "Winter's good for staying inside and being small. I respect it.",
+      "Conditions": {
+        "RegressionStages": [ "little", "middle", "baby" ],
+        "Seasons": [ "winter" ],
+        "MinFriendshipHearts": 5
+      },
+      "Weight": 1,
+      "CooldownDays": 7
+    }
+  ]
+}

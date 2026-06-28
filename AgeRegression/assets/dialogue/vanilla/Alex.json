@@ -1,0 +1,70 @@
+{
+  "PackId": "Alex",
+  "DisplayName": "Alex Dialogue",
+  "Entries": [
+    {
+      "Key": "alex_greet_regressed_awkward",
+      "Text": "Uh... hey. You doing okay? You seem kind of... different today.",
+      "Conditions": {
+        "RegressionStages": [ "little", "middle" ],
+        "MinFriendshipHearts": 2,
+        "NpcPersonalityTags": [ "neutral" ]
+      },
+      "Weight": 2,
+      "CooldownDays": 3
+    },
+    {
+      "Key": "alex_greet_baby_confused",
+      "Text": "Whoa. Okay. I don't really know what's going on but... you good?",
+      "Conditions": {
+        "RegressionStages": [ "baby" ],
+        "MinFriendshipHearts": 3
+      },
+      "Weight": 2,
+      "CooldownDays": 2
+    },
+    {
+      "Key": "alex_diaper_teasing_low_friendship",
+      "Text": "Is that... are you wearing a— you know what, none of my business.",
+      "Conditions": {
+        "IsWearingDiaper": true,
+        "MinFriendshipHearts": 2,
+        "MaxFriendshipHearts": 5,
+        "NpcPersonalityTags": [ "teasing" ]
+      },
+      "Weight": 1,
+      "CooldownDays": 5
+    },
+    {
+      "Key": "alex_diaper_high_friendship",
+      "Text": "Hey, I'm not judging. You do what makes you happy. That's what Grandma always says.",
+      "Conditions": {
+        "IsWearingDiaper": true,
+        "MinFriendshipHearts": 7
+      },
+      "Weight": 2,
+      "CooldownDays": 3
+    },
+    {
+      "Key": "alex_low_comfort",
+      "Text": "You look rough. Want to toss the ball around? Sometimes that helps me.",
+      "Conditions": {
+        "MaxComfortNormalized": 0.35,
+        "MinFriendshipHearts": 4
+      },
+      "Weight": 2,
+      "CooldownDays": 2
+    },
+    {
+      "Key": "alex_summer_regressed",
+      "Text": "Hot day, huh? You should take it easy. Don't push yourself too hard.",
+      "Conditions": {
+        "RegressionStages": [ "little", "middle", "baby" ],
+        "Seasons": [ "summer" ],
+        "MinFriendshipHearts": 3
+      },
+      "Weight": 1,
+      "CooldownDays": 7
+    }
+  ]
+}

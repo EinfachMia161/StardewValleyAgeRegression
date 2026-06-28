@@ -1,0 +1,74 @@
+[
+  {
+    "NpcName": "Abigail",
+    "PersonalityTags": [ "curious", "supportive" ],
+    "CanBeCaregiver": true,
+    "DialoguePackKey": "Abigail"
+  },
+  {
+    "NpcName": "Alex",
+    "PersonalityTags": [ "teasing", "neutral" ],
+    "CanBeCaregiver": false,
+    "DialoguePackKey": "Alex"
+  },
+  {
+    "NpcName": "Emily",
+    "PersonalityTags": [ "caring", "supportive" ],
+    "CanBeCaregiver": true,
+    "DialoguePackKey": "Emily"
+  },
+  {
+    "NpcName": "Haley",
+    "PersonalityTags": [ "teasing", "embarrassed" ],
+    "CanBeCaregiver": false,
+    "DialoguePackKey": "Haley"
+  },
+  {
+    "NpcName": "Leah",
+    "PersonalityTags": [ "neutral", "supportive" ],
+    "CanBeCaregiver": true,
+    "DialoguePackKey": "Leah"
+  },
+  {
+    "NpcName": "Maru",
+    "PersonalityTags": [ "curious", "neutral" ],
+    "CanBeCaregiver": false,
+    "DialoguePackKey": "Maru"
+  },
+  {
+    "NpcName": "Penny",
+    "PersonalityTags": [ "caring", "supportive" ],
+    "CanBeCaregiver": true,
+    "DialoguePackKey": "Penny"
+  },
+  {
+    "NpcName": "Sam",
+    "PersonalityTags": [ "teasing", "neutral" ],
+    "CanBeCaregiver": false,
+    "DialoguePackKey": "Sam"
+  },
+  {
+    "NpcName": "Sebastian",
+    "PersonalityTags": [ "neutral" ],
+    "CanBeCaregiver": false,
+    "DialoguePackKey": "Sebastian"
+  },
+  {
+    "NpcName": "Shane",
+    "PersonalityTags": [ "neutral", "embarrassed" ],
+    "CanBeCaregiver": false,
+    "DialoguePackKey": "Shane"
+  },
+  {
+    "NpcName": "Elliott",
+    "PersonalityTags": [ "caring", "supportive" ],
+    "CanBeCaregiver": true,
+    "DialoguePackKey": "Elliott"
+  },
+  {
+    "NpcName": "Harvey",
+    "PersonalityTags": [ "caring", "neutral" ],
+    "CanBeCaregiver": true,
+    "DialoguePackKey": "Harvey"
+  }
+]

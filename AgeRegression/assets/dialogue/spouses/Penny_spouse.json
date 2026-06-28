@@ -1,0 +1,84 @@
+{
+  "PackId": "Penny_spouse",
+  "DisplayName": "Penny Spouse Dialogue",
+  "Entries": [
+    {
+      "Key": "penny_spouse_morning_little",
+      "Text": "Good morning, sweetheart. How's my little one feeling today?",
+      "Conditions": {
+        "RegressionStages": [ "little", "middle" ],
+        "IsMarried": true,
+        "TimeFrom": 600,
+        "TimeTo": 1000
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "penny_spouse_morning_baby",
+      "Text": "Good morning, baby. Did you sleep well? Come here, let me look at you.",
+      "Conditions": {
+        "RegressionStages": [ "baby" ],
+        "IsMarried": true,
+        "TimeFrom": 600,
+        "TimeTo": 1000
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "penny_spouse_diaper_check",
+      "Text": "Hey... do you need a change, sweetheart? It's okay, I've got you.",
+      "Conditions": {
+        "IsMarried": true,
+        "IsWearingDiaper": true,
+        "DiaperConditions": [ "wet", "soaked" ],
+        "MinFriendshipHearts": 10
+      },
+      "Weight": 3,
+      "CooldownDays": 0
+    },
+    {
+      "Key": "penny_spouse_comfort_low",
+      "Text": "Oh no, you look so sad. Come here. I've got you, okay? Everything's going to be fine.",
+      "Conditions": {
+        "IsMarried": true,
+        "MaxComfortNormalized": 0.25
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "penny_spouse_comfort_high",
+      "Text": "You seem happy today! That makes me so happy too. I love seeing you like this.",
+      "Conditions": {
+        "IsMarried": true,
+        "MinComfortNormalized": 0.8
+      },
+      "Weight": 2,
+      "CooldownDays": 2
+    },
+    {
+      "Key": "penny_spouse_pacifier_sweet",
+      "Text": "You look so cute with that. Don't be embarrassed — I think it's precious.",
+      "Conditions": {
+        "IsMarried": true,
+        "RequiredAccessories": [ "pacifier" ]
+      },
+      "Weight": 2,
+      "CooldownDays": 3
+    },
+    {
+      "Key": "penny_spouse_evening_little",
+      "Text": "It's getting late, little one. How about we wind down for the night?",
+      "Conditions": {
+        "IsMarried": true,
+        "RegressionStages": [ "little", "middle", "baby" ],
+        "TimeFrom": 1800,
+        "TimeTo": 2200
+      },
+      "Weight": 2,
+      "CooldownDays": 1
+    }
+  ]
+}

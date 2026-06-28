@@ -1,0 +1,71 @@
+{
+  "PackId": "Elliott_spouse",
+  "DisplayName": "Elliott Spouse Dialogue",
+  "Entries": [
+    {
+      "Key": "elliott_spouse_morning_little",
+      "Text": "Good morning, my darling. You have the most wonderful softness about you today.",
+      "Conditions": {
+        "RegressionStages": [ "little", "middle" ],
+        "IsMarried": true,
+        "TimeFrom": 600,
+        "TimeTo": 1000
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "elliott_spouse_morning_baby",
+      "Text": "Good morning, little love. I shall dedicate today's writing to you.",
+      "Conditions": {
+        "RegressionStages": [ "baby" ],
+        "IsMarried": true,
+        "TimeFrom": 600,
+        "TimeTo": 1000
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "elliott_spouse_diaper_tender",
+      "Text": "Come here, my love. Let me take care of you. This is what I am here for.",
+      "Conditions": {
+        "IsMarried": true,
+        "IsWearingDiaper": true,
+        "DiaperConditions": [ "wet", "soaked" ]
+      },
+      "Weight": 3,
+      "CooldownDays": 0
+    },
+    {
+      "Key": "elliott_spouse_comfort_low",
+      "Text": "You carry such weight today. Let me read to you. Words have always been my comfort.",
+      "Conditions": {
+        "IsMarried": true,
+        "MaxComfortNormalized": 0.3
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "elliott_spouse_comfort_high",
+      "Text": "You are radiant today, my love. I could write a thousand pages about this moment.",
+      "Conditions": {
+        "IsMarried": true,
+        "MinComfortNormalized": 0.8
+      },
+      "Weight": 2,
+      "CooldownDays": 2
+    },
+    {
+      "Key": "elliott_spouse_plushie_poem",
+      "Text": "You and your bunny. I wrote a poem about it last night. Shall I read it to you?",
+      "Conditions": {
+        "IsMarried": true,
+        "RequiredAccessories": [ "plushie_bunny" ]
+      },
+      "Weight": 2,
+      "CooldownDays": 4
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "none",
+    "DisplayName": "Normal",
+    "Order": 0,
+    "Description": "No regression. The player behaves normally.",
+    "StatModifiers": {
+      "SpeedMultiplier": 1.0,
+      "MaxEnergyMultiplier": 1.0,
+      "SkillXpMultiplier": 1.0,
+      "CanUseTools": true
+    }
+  },
+  {
+    "Id": "little",
+    "DisplayName": "Little",
+    "Order": 1,
+    "Description": "Mild regression. Slight stat changes.",
+    "StatModifiers": {
+      "SpeedMultiplier": 0.95,
+      "MaxEnergyMultiplier": 0.95,
+      "SkillXpMultiplier": 1.0,
+      "CanUseTools": true
+    }
+  },
+  {
+    "Id": "middle",
+    "DisplayName": "Middle",
+    "Order": 2,
+    "Description": "Moderate regression.",
+    "StatModifiers": {
+      "SpeedMultiplier": 0.85,
+      "MaxEnergyMultiplier": 0.85,
+      "SkillXpMultiplier": 0.9,
+      "CanUseTools": true
+    }
+  },
+  {
+    "Id": "baby",
+    "DisplayName": "Baby",
+    "Order": 3,
+    "Description": "Deep regression. Significant stat changes.",
+    "StatModifiers": {
+      "SpeedMultiplier": 0.7,
+      "MaxEnergyMultiplier": 0.7,
+      "SkillXpMultiplier": 0.75,
+      "CanUseTools": false
+    }
+  }
+]

@@ -1,0 +1,46 @@
+{
+  "PackId": "Harvey",
+  "DisplayName": "Harvey Dialogue",
+  "Entries": [
+    {
+      "Key": "harvey_greet_regressed_neutral",
+      "Text": "Good to see you, {PlayerName}. How are you feeling today? Any concerns I should know about?",
+      "Conditions": {
+        "RegressionStages": [ "little", "middle", "baby" ],
+        "MinFriendshipHearts": 2
+      },
+      "Weight": 2,
+      "CooldownDays": 2
+    },
+    {
+      "Key": "harvey_diaper_professional",
+      "Text": "I won't pry into personal matters. Just... make sure you're staying hydrated and comfortable.",
+      "Conditions": {
+        "IsWearingDiaper": true,
+        "MinFriendshipHearts": 3
+      },
+      "Weight": 1,
+      "CooldownDays": 5
+    },
+    {
+      "Key": "harvey_low_comfort_medical",
+      "Text": "You don't look well. Stress can have real physical effects. Please take care of yourself.",
+      "Conditions": {
+        "MaxComfortNormalized": 0.25,
+        "MinFriendshipHearts": 3
+      },
+      "Weight": 2,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "harvey_hungry_concerned",
+      "Text": "Have you eaten today? Proper nutrition is important. Don't skip meals.",
+      "Conditions": {
+        "MaxHungerNormalized": 0.3,
+        "MinFriendshipHearts": 2
+      },
+      "Weight": 2,
+      "CooldownDays": 1
+    }
+  ]
+}

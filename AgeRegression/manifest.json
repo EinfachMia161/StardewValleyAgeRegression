@@ -1,0 +1,19 @@
+{
+  "Name": "Age Regression",
+  "Author": "mia",
+  "Version": "0.1.0",
+  "Description": "Adds age regression mechanics to Stardew Valley.",
+  "UniqueID": "mia.AgeRegression",
+  "EntryDll": "AgeRegression.dll",
+  "MinimumApiVersion": "4.0.0",
+  "Dependencies": [
+    {
+      "UniqueID": "Pathoschild.ContentPatcher",
+      "IsRequired": false
+    },
+    {
+      "UniqueID": "spacechase0.GenericModConfigMenu",
+      "IsRequired": false
+    }
+  ]
+}

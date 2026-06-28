@@ -1,0 +1,68 @@
+{
+  "PackId": "Sam",
+  "DisplayName": "Sam Dialogue",
+  "Entries": [
+    {
+      "Key": "sam_greet_regressed_chill",
+      "Text": "Dude, you're in full little mode today, huh? That's totally cool.",
+      "Conditions": {
+        "RegressionStages": [ "little", "middle" ],
+        "MinFriendshipHearts": 3,
+        "NpcPersonalityTags": [ "teasing", "neutral" ]
+      },
+      "Weight": 3,
+      "CooldownDays": 2
+    },
+    {
+      "Key": "sam_greet_baby_wholesome",
+      "Text": "Aww, hey little buddy! You want to come watch me practice guitar?",
+      "Conditions": {
+        "RegressionStages": [ "baby" ],
+        "MinFriendshipHearts": 4
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "sam_diaper_teasing_friendly",
+      "Text": "Okay I'm not gonna say anything but I'm definitely thinking something.",
+      "Conditions": {
+        "IsWearingDiaper": true,
+        "MinFriendshipHearts": 4,
+        "NpcPersonalityTags": [ "teasing" ]
+      },
+      "Weight": 2,
+      "CooldownDays": 3
+    },
+    {
+      "Key": "sam_diaper_supportive",
+      "Text": "Hey, no judgment from me. You do what makes you happy, man.",
+      "Conditions": {
+        "IsWearingDiaper": true,
+        "MinFriendshipHearts": 6
+      },
+      "Weight": 2,
+      "CooldownDays": 3
+    },
+    {
+      "Key": "sam_low_comfort_gaming",
+      "Text": "You look bummed. Want to come over and play some video games? That always helps me.",
+      "Conditions": {
+        "MaxComfortNormalized": 0.35,
+        "MinFriendshipHearts": 4
+      },
+      "Weight": 2,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "sam_pacifier_amused",
+      "Text": "Haha, okay, that's actually kind of adorable. Don't tell anyone I said that.",
+      "Conditions": {
+        "RequiredAccessories": [ "pacifier" ],
+        "MinFriendshipHearts": 5
+      },
+      "Weight": 2,
+      "CooldownDays": 4
+    }
+  ]
+}

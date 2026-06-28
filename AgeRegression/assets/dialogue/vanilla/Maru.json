@@ -1,0 +1,58 @@
+{
+  "PackId": "Maru",
+  "DisplayName": "Maru Dialogue",
+  "Entries": [
+    {
+      "Key": "maru_greet_regressed_curious",
+      "Text": "Interesting. Your behavioral patterns are quite different today. Fascinating, actually.",
+      "Conditions": {
+        "RegressionStages": [ "little", "middle" ],
+        "MinFriendshipHearts": 3,
+        "NpcPersonalityTags": [ "curious" ]
+      },
+      "Weight": 2,
+      "CooldownDays": 3
+    },
+    {
+      "Key": "maru_greet_baby_analytical",
+      "Text": "From a psychological standpoint, regression can be a healthy coping mechanism. How are you feeling?",
+      "Conditions": {
+        "RegressionStages": [ "baby" ],
+        "MinFriendshipHearts": 4
+      },
+      "Weight": 2,
+      "CooldownDays": 2
+    },
+    {
+      "Key": "maru_diaper_clinical",
+      "Text": "I've read about this. It's more common than people think. Nothing to be embarrassed about.",
+      "Conditions": {
+        "IsWearingDiaper": true,
+        "MinFriendshipHearts": 4,
+        "NpcPersonalityTags": [ "curious", "neutral" ]
+      },
+      "Weight": 2,
+      "CooldownDays": 4
+    },
+    {
+      "Key": "maru_low_comfort_problem_solving",
+      "Text": "You seem distressed. Let's approach this systematically. What's the primary issue?",
+      "Conditions": {
+        "MaxComfortNormalized": 0.3,
+        "MinFriendshipHearts": 4
+      },
+      "Weight": 2,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "maru_pacifier_engineering",
+      "Text": "Hm. The design on that is actually quite ergonomic. Did you know the shape is optimized for—",
+      "Conditions": {
+        "RequiredAccessories": [ "pacifier" ],
+        "MinFriendshipHearts": 4
+      },
+      "Weight": 1,
+      "CooldownDays": 5
+    }
+  ]
+}

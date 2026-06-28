@@ -1,0 +1,58 @@
+{
+  "PackId": "Penny",
+  "DisplayName": "Penny Dialogue",
+  "Entries": [
+    {
+      "Key": "penny_greet_little_caring",
+      "Text": "Oh, {PlayerName}... you seem like you need some extra care today. That's okay.",
+      "Conditions": {
+        "RegressionStages": [ "little" ],
+        "MinFriendshipHearts": 3,
+        "NpcPersonalityTags": [ "caring" ]
+      },
+      "Weight": 3,
+      "CooldownDays": 2
+    },
+    {
+      "Key": "penny_greet_baby",
+      "Text": "Hello, little one. Don't you worry about a thing. Penny's here.",
+      "Conditions": {
+        "RegressionStages": [ "baby" ],
+        "MinFriendshipHearts": 4
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "penny_diaper_supportive",
+      "Text": "I think it's wonderful that you're comfortable being yourself. Don't let anyone make you feel otherwise.",
+      "Conditions": {
+        "IsWearingDiaper": true,
+        "MinFriendshipHearts": 5,
+        "NpcPersonalityTags": [ "supportive", "caring" ]
+      },
+      "Weight": 2,
+      "CooldownDays": 3
+    },
+    {
+      "Key": "penny_low_continence_gentle",
+      "Text": "Hey... are you doing okay? You look a little uncomfortable. Do you need anything?",
+      "Conditions": {
+        "ContinenceThresholds": [ "struggling", "warning" ],
+        "MinFriendshipHearts": 4
+      },
+      "Weight": 2,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "penny_low_comfort",
+      "Text": "You look like you're having a hard day. Come sit with me for a bit?",
+      "Conditions": {
+        "MaxComfortNormalized": 0.35,
+        "MinFriendshipHearts": 4
+      },
+      "Weight": 2,
+      "CooldownDays": 1
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "EventId": "mia.AgeRegression.FirstRegression",
+    "Location": "FarmHouse",
+    "ScriptFile": "assets/events/first_regression.txt",
+    "NativePreconditions": null,
+    "ModConditions": {
+      "RegressionStages": [ "little", "middle", "baby" ]
+    },
+    "OneTimeOnly": true,
+    "RepeatCooldownDays": 7,
+    "Priority": 10
+  },
+  {
+    "EventId": "mia.AgeRegression.SpouseNoticesDiaper",
+    "Location": "FarmHouse",
+    "ScriptFile": "assets/events/spouse_notices_diaper.txt",
+    "NativePreconditions": null,
+    "ModConditions": {
+      "IsMarried": true,
+      "IsWearingDiaper": true,
+      "MinFriendshipHearts": 10
+    },
+    "OneTimeOnly": true,
+    "RepeatCooldownDays": 7,
+    "Priority": 8
+  },
+  {
+    "EventId": "mia.AgeRegression.ComfortMoment",
+    "Location": "FarmHouse",
+    "ScriptFile": "assets/events/comfort_moment.txt",
+    "NativePreconditions": null,
+    "ModConditions": {
+      "IsMarried": true,
+      "MaxComfortNormalized": 0.2,
+      "MinFriendshipHearts": 8
+    },
+    "OneTimeOnly": false,
+    "RepeatCooldownDays": 14,
+    "Priority": 5
+  }
+]

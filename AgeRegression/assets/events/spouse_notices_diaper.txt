@@ -1,0 +1,1 @@
+none/-1000 -1000/farmer 8 8 2/skippable/faceDirection farmer 2/pause 500/speak farmer "..."/end

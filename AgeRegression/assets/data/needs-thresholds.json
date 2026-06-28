@@ -1,0 +1,89 @@
+[
+  {
+    "NeedId": "continence",
+    "Thresholds": [
+      {
+        "Id": "loss_of_control",
+        "DisplayName": "Loss of Control",
+        "MinNormalized": 0.00,
+        "Order": 0
+      },
+      {
+        "Id": "struggling",
+        "DisplayName": "Struggling",
+        "MinNormalized": 0.15,
+        "Order": 1
+      },
+      {
+        "Id": "warning",
+        "DisplayName": "Warning",
+        "MinNormalized": 0.35,
+        "Order": 2
+      },
+      {
+        "Id": "comfortable",
+        "DisplayName": "Comfortable",
+        "MinNormalized": 0.60,
+        "Order": 3
+      }
+    ]
+  },
+  {
+    "NeedId": "hunger",
+    "Thresholds": [
+      {
+        "Id": "starving",
+        "DisplayName": "Starving",
+        "MinNormalized": 0.00,
+        "Order": 0
+      },
+      {
+        "Id": "hungry",
+        "DisplayName": "Hungry",
+        "MinNormalized": 0.20,
+        "Order": 1
+      },
+      {
+        "Id": "peckish",
+        "DisplayName": "Peckish",
+        "MinNormalized": 0.45,
+        "Order": 2
+      },
+      {
+        "Id": "satisfied",
+        "DisplayName": "Satisfied",
+        "MinNormalized": 0.70,
+        "Order": 3
+      }
+    ]
+  },
+  {
+    "NeedId": "thirst",
+    "Thresholds": [
+      {
+        "Id": "dehydrated",
+        "DisplayName": "Dehydrated",
+        "MinNormalized": 0.00,
+        "Order": 0
+      },
+      {
+        "Id": "thirsty",
+        "DisplayName": "Thirsty",
+        "MinNormalized": 0.20,
+        "Order": 1
+      },
+      {
+        "Id": "dry",
+        "DisplayName": "Dry",
+        "MinNormalized": 0.45,
+        "Order": 2
+      },
+      {
+        "Id": "hydrated",
+        "DisplayName": "Hydrated",
+        "MinNormalized": 0.70,
+        "Order": 3
+      }
+    ]
+  }
+]

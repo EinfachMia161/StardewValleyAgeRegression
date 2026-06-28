@@ -1,0 +1,1 @@
+none/-1000 -1000/farmer 8 8 2/skippable/pause 300/emote farmer 32/end

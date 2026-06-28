@@ -1,0 +1,46 @@
+{
+  "PackId": "generic_fallback",
+  "DisplayName": "Generic Fallback Dialogue",
+  "Entries": [
+    {
+      "Key": "generic_greet_regressed",
+      "Text": "You seem a little different today. Are you doing okay?",
+      "Conditions": {
+        "RegressionStages": [ "little", "middle", "baby" ],
+        "MinFriendshipHearts": 2
+      },
+      "Weight": 1,
+      "CooldownDays": 2
+    },
+    {
+      "Key": "generic_diaper_noticed",
+      "Text": "I couldn't help but notice... well, never mind. You do you.",
+      "Conditions": {
+        "IsWearingDiaper": true,
+        "MinFriendshipHearts": 4
+      },
+      "Weight": 1,
+      "CooldownDays": 3
+    },
+    {
+      "Key": "generic_low_comfort",
+      "Text": "You don't look like yourself today. I hope things get better.",
+      "Conditions": {
+        "MaxComfortNormalized": 0.3,
+        "MinFriendshipHearts": 2
+      },
+      "Weight": 1,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "generic_hungry",
+      "Text": "Have you eaten? You look a little pale.",
+      "Conditions": {
+        "MaxHungerNormalized": 0.25,
+        "MinFriendshipHearts": 2
+      },
+      "Weight": 1,
+      "CooldownDays": 1
+    }
+  ]
+}

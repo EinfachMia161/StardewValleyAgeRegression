@@ -1,0 +1,83 @@
+{
+  "PackId": "Emily_spouse",
+  "DisplayName": "Emily Spouse Dialogue",
+  "Entries": [
+    {
+      "Key": "emily_spouse_morning_little",
+      "Text": "Good morning, my little love! The crystals are aligned beautifully today. It's going to be a wonderful day.",
+      "Conditions": {
+        "RegressionStages": [ "little", "middle" ],
+        "IsMarried": true,
+        "TimeFrom": 600,
+        "TimeTo": 1000
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "emily_spouse_morning_baby",
+      "Text": "Oh, good morning, little one! Come here, let me hold you for a moment before the day starts.",
+      "Conditions": {
+        "RegressionStages": [ "baby" ],
+        "IsMarried": true,
+        "TimeFrom": 600,
+        "TimeTo": 1000
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "emily_spouse_diaper_nurturing",
+      "Text": "Oh sweetheart, let me take care of that for you. Come here.",
+      "Conditions": {
+        "IsMarried": true,
+        "IsWearingDiaper": true,
+        "DiaperConditions": [ "wet", "soaked" ]
+      },
+      "Weight": 3,
+      "CooldownDays": 0
+    },
+    {
+      "Key": "emily_spouse_comfort_low",
+      "Text": "Your aura is so dim right now. Let me make you some tea and we can just be together, okay?",
+      "Conditions": {
+        "IsMarried": true,
+        "MaxComfortNormalized": 0.3
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "emily_spouse_comfort_high",
+      "Text": "You're glowing today! Absolutely radiant. I love you so much.",
+      "Conditions": {
+        "IsMarried": true,
+        "MinComfortNormalized": 0.8
+      },
+      "Weight": 2,
+      "CooldownDays": 2
+    },
+    {
+      "Key": "emily_spouse_pacifier_crafting",
+      "Text": "I've been thinking — I could sew you a little outfit to match that. Would you like that?",
+      "Conditions": {
+        "IsMarried": true,
+        "RequiredAccessories": [ "pacifier" ]
+      },
+      "Weight": 2,
+      "CooldownDays": 3
+    },
+    {
+      "Key": "emily_spouse_evening",
+      "Text": "Time to wind down, little love. Let's get you cozy for the night.",
+      "Conditions": {
+        "IsMarried": true,
+        "RegressionStages": [ "little", "middle", "baby" ],
+        "TimeFrom": 1900,
+        "TimeTo": 2200
+      },
+      "Weight": 2,
+      "CooldownDays": 1
+    }
+  ]
+}

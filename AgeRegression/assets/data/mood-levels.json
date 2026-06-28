@@ -1,0 +1,52 @@
+[
+  {
+    "Id": "distressed",
+    "DisplayName": "Distressed",
+    "MinComfortNormalized": 0.00,
+    "Order": 0,
+    "StatModifiers": {
+      "SpeedMultiplier": 0.85,
+      "SkillXpMultiplier": 0.75
+    }
+  },
+  {
+    "Id": "fussy",
+    "DisplayName": "Fussy",
+    "MinComfortNormalized": 0.20,
+    "Order": 1,
+    "StatModifiers": {
+      "SpeedMultiplier": 0.92,
+      "SkillXpMultiplier": 0.88
+    }
+  },
+  {
+    "Id": "okay",
+    "DisplayName": "Okay",
+    "MinComfortNormalized": 0.45,
+    "Order": 2,
+    "StatModifiers": {
+      "SpeedMultiplier": 1.0,
+      "SkillXpMultiplier": 1.0
+    }
+  },
+  {
+    "Id": "content",
+    "DisplayName": "Content",
+    "MinComfortNormalized": 0.65,
+    "Order": 3,
+    "StatModifiers": {
+      "SpeedMultiplier": 1.02,
+      "SkillXpMultiplier": 1.05
+    }
+  },
+  {
+    "Id": "happy",
+    "DisplayName": "Happy",
+    "MinComfortNormalized": 0.85,
+    "Order": 4,
+    "StatModifiers": {
+      "SpeedMultiplier": 1.05,
+      "SkillXpMultiplier": 1.10
+    }
+  }
+]

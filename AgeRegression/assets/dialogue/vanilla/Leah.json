@@ -1,0 +1,68 @@
+{
+  "PackId": "Leah",
+  "DisplayName": "Leah Dialogue",
+  "Entries": [
+    {
+      "Key": "leah_greet_little_artistic",
+      "Text": "There's something different about you today. Something softer. I like it.",
+      "Conditions": {
+        "RegressionStages": [ "little", "middle" ],
+        "MinFriendshipHearts": 3,
+        "NpcPersonalityTags": [ "neutral", "supportive" ]
+      },
+      "Weight": 2,
+      "CooldownDays": 2
+    },
+    {
+      "Key": "leah_greet_baby_gentle",
+      "Text": "Oh, hello little one. Come sit with me by the river for a while?",
+      "Conditions": {
+        "RegressionStages": [ "baby" ],
+        "MinFriendshipHearts": 4
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "leah_diaper_nonjudgmental",
+      "Text": "I've seen stranger things in the art world. You be you, {PlayerName}.",
+      "Conditions": {
+        "IsWearingDiaper": true,
+        "MinFriendshipHearts": 4
+      },
+      "Weight": 2,
+      "CooldownDays": 4
+    },
+    {
+      "Key": "leah_plushie_inspired",
+      "Text": "That plushie is adorable. I might want to sculpt something like that someday.",
+      "Conditions": {
+        "RequiredAccessories": [ "plushie_bunny" ],
+        "MinFriendshipHearts": 3
+      },
+      "Weight": 2,
+      "CooldownDays": 4
+    },
+    {
+      "Key": "leah_low_comfort_nature",
+      "Text": "You look like you need some fresh air. Walk with me?",
+      "Conditions": {
+        "MaxComfortNormalized": 0.35,
+        "MinFriendshipHearts": 4
+      },
+      "Weight": 2,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "leah_fall_regressed",
+      "Text": "Fall is such a cozy season. Perfect for being a little... smaller.",
+      "Conditions": {
+        "RegressionStages": [ "little", "middle", "baby" ],
+        "Seasons": [ "fall" ],
+        "MinFriendshipHearts": 4
+      },
+      "Weight": 1,
+      "CooldownDays": 7
+    }
+  ]
+}

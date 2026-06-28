@@ -1,0 +1,73 @@
+{
+  "PackId": "Leah_spouse",
+  "DisplayName": "Leah Spouse Dialogue",
+  "Entries": [
+    {
+      "Key": "leah_spouse_morning_little",
+      "Text": "Morning, little one. Want to come sit outside with me while I sketch?",
+      "Conditions": {
+        "RegressionStages": [ "little", "middle" ],
+        "IsMarried": true,
+        "TimeFrom": 600,
+        "TimeTo": 1000
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "leah_spouse_morning_baby",
+      "Text": "Good morning, baby. I made some warm oatmeal. Come eat with me.",
+      "Conditions": {
+        "RegressionStages": [ "baby" ],
+        "IsMarried": true,
+        "TimeFrom": 600,
+        "TimeTo": 1000
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "leah_spouse_diaper_gentle",
+      "Text": "Hey, I've got you. Let's get you sorted out, okay? No rush.",
+      "Conditions": {
+        "IsMarried": true,
+        "IsWearingDiaper": true,
+        "DiaperConditions": [ "wet", "soaked" ]
+      },
+      "Weight": 3,
+      "CooldownDays": 0
+    },
+    {
+      "Key": "leah_spouse_comfort_low",
+      "Text": "You look like you need the forest today. Come walk with me. We don't have to talk.",
+      "Conditions": {
+        "IsMarried": true,
+        "MaxComfortNormalized": 0.3
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "leah_spouse_plushie",
+      "Text": "You and your bunny. I love it. I might sculpt the two of you together someday.",
+      "Conditions": {
+        "IsMarried": true,
+        "RequiredAccessories": [ "plushie_bunny" ]
+      },
+      "Weight": 2,
+      "CooldownDays": 3
+    },
+    {
+      "Key": "leah_spouse_evening",
+      "Text": "The stars are out. Want me to carry you to bed, little one?",
+      "Conditions": {
+        "IsMarried": true,
+        "RegressionStages": [ "baby" ],
+        "TimeFrom": 2000,
+        "TimeTo": 2400
+      },
+      "Weight": 2,
+      "CooldownDays": 1
+    }
+  ]
+}

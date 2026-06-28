@@ -1,0 +1,22 @@
+[
+  {
+    "FurnitureId": "Crib",
+    "ComfortModifierId": "near_crib",
+    "ProximityTiles": 3
+  },
+  {
+    "FurnitureId": "ChangingTable",
+    "ComfortModifierId": "near_changing_table",
+    "ProximityTiles": 2
+  },
+  {
+    "FurnitureId": "ToyBox",
+    "ComfortModifierId": "near_toy_box",
+    "ProximityTiles": 2
+  },
+  {
+    "FurnitureId": "Playpen",
+    "ComfortModifierId": "near_playpen",
+    "ProximityTiles": 1
+  }
+]

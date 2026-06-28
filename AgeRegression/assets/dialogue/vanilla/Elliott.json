@@ -1,0 +1,68 @@
+{
+  "PackId": "Elliott",
+  "DisplayName": "Elliott Dialogue",
+  "Entries": [
+    {
+      "Key": "elliott_greet_little_poetic",
+      "Text": "There is something wonderfully unguarded about you today, {PlayerName}. Like a first draft.",
+      "Conditions": {
+        "RegressionStages": [ "little" ],
+        "MinFriendshipHearts": 3,
+        "NpcPersonalityTags": [ "caring", "supportive" ]
+      },
+      "Weight": 2,
+      "CooldownDays": 2
+    },
+    {
+      "Key": "elliott_greet_baby_literary",
+      "Text": "Ah, the smallest version of you. Every great story has a beginning, dear friend.",
+      "Conditions": {
+        "RegressionStages": [ "baby" ],
+        "MinFriendshipHearts": 4
+      },
+      "Weight": 2,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "elliott_diaper_gracious",
+      "Text": "I have written characters far stranger than this. You are simply living authentically.",
+      "Conditions": {
+        "IsWearingDiaper": true,
+        "MinFriendshipHearts": 5
+      },
+      "Weight": 2,
+      "CooldownDays": 3
+    },
+    {
+      "Key": "elliott_low_comfort_eloquent",
+      "Text": "You carry a heaviness today. Sit with me. Sometimes words help, and sometimes silence does.",
+      "Conditions": {
+        "MaxComfortNormalized": 0.35,
+        "MinFriendshipHearts": 4
+      },
+      "Weight": 2,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "elliott_plushie_muse",
+      "Text": "That plushie has a certain dignity to it. I may write a character inspired by it.",
+      "Conditions": {
+        "RequiredAccessories": [ "plushie_bunny" ],
+        "MinFriendshipHearts": 4
+      },
+      "Weight": 1,
+      "CooldownDays": 5
+    },
+    {
+      "Key": "elliott_fall_regressed",
+      "Text": "Autumn suits you in this state. There is something timeless about it.",
+      "Conditions": {
+        "RegressionStages": [ "little", "middle", "baby" ],
+        "Seasons": [ "fall" ],
+        "MinFriendshipHearts": 4
+      },
+      "Weight": 1,
+      "CooldownDays": 7
+    }
+  ]
+}

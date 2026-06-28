@@ -1,0 +1,89 @@
+{
+  "PackId": "Abigail",
+  "DisplayName": "Abigail Dialogue",
+  "Entries": [
+    {
+      "Key": "abigail_greet_little",
+      "Text": "Hey {PlayerName}! You seem a little... different today. In a cute way, I mean.",
+      "Conditions": {
+        "RegressionStages": [ "little" ],
+        "MinFriendshipHearts": 3
+      },
+      "Weight": 2,
+      "CooldownDays": 2
+    },
+    {
+      "Key": "abigail_greet_middle",
+      "Text": "Aww, {PlayerName}... you're in one of those moods, huh? Come on, let's hang out.",
+      "Conditions": {
+        "RegressionStages": [ "middle" ],
+        "MinFriendshipHearts": 4
+      },
+      "Weight": 2,
+      "CooldownDays": 2
+    },
+    {
+      "Key": "abigail_greet_baby",
+      "Text": "Oh! Hi there, little one. Don't worry, Abby's got you.",
+      "Conditions": {
+        "RegressionStages": [ "baby" ],
+        "MinFriendshipHearts": 5
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "abigail_diaper_noticed_low_friendship",
+      "Text": "Um... is that... never mind. You do you, {PlayerName}.",
+      "Conditions": {
+        "IsWearingDiaper": true,
+        "MinFriendshipHearts": 2,
+        "MaxFriendshipHearts": 4
+      },
+      "Weight": 1,
+      "CooldownDays": 5
+    },
+    {
+      "Key": "abigail_diaper_noticed_high_friendship",
+      "Text": "Hey, no judgment here. I think it's kind of sweet, honestly.",
+      "Conditions": {
+        "IsWearingDiaper": true,
+        "MinFriendshipHearts": 6
+      },
+      "Weight": 2,
+      "CooldownDays": 3
+    },
+    {
+      "Key": "abigail_pacifier_curious",
+      "Text": "Is that a pacifier? Okay, I have questions, but also... it's adorable.",
+      "Conditions": {
+        "RequiredAccessories": [ "pacifier" ],
+        "MinFriendshipHearts": 4
+      },
+      "Weight": 1,
+      "CooldownDays": 4
+    },
+    {
+      "Key": "abigail_low_comfort_caring",
+      "Text": "Hey, you okay? You look like you could use a hug. Come here.",
+      "Conditions": {
+        "MaxComfortNormalized": 0.3,
+        "MinFriendshipHearts": 5,
+        "NpcPersonalityTags": [ "supportive", "curious" ]
+      },
+      "Weight": 2,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "abigail_spring_little",
+      "Text": "Spring is so pretty, isn't it? Everything feels new. Even you, a little.",
+      "Conditions": {
+        "RegressionStages": [ "little", "middle" ],
+        "Seasons": [ "spring" ],
+        "MinFriendshipHearts": 3
+      },
+      "Weight": 1,
+      "CooldownDays": 7
+    }
+  ]
+}

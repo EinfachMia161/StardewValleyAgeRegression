@@ -1,0 +1,101 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>AgeRegression</AssemblyName>
+    <RootNamespace>AgeRegression</RootNamespace>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Optimize>true</Optimize>
+    <Deterministic>true</Deterministic>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningsAsErrors>CS8600;CS8601;CS8602;CS8603;CS8604</WarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GamePath Condition="'$(GamePath)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Stardew Valley</GamePath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <UseGameAssemblies Condition="'$(UseGameAssemblies)' == ''">true</UseGameAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(UseGameAssemblies)' == 'true'">
+    <Reference Include="StardewModdingAPI">
+      <HintPath>$(GamePath)\StardewModdingAPI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="SMAPI.Toolkit.CoreInterfaces">
+      <HintPath>$(GamePath)\smapi-internal\SMAPI.Toolkit.CoreInterfaces.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="StardewValley">
+      <HintPath>$(GamePath)\Stardew Valley.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="MonoGame.Framework">
+      <HintPath>$(GamePath)\MonoGame.Framework.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="StardewValley.GameData">
+      <HintPath>$(GamePath)\StardewValley.GameData.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>$(GamePath)\smapi-internal\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="BuildStubs/**/*.cs" />
+  </ItemGroup>
+
+  <!-- Copies the built mod to the game's Mods folder for in-game testing. -->
+  <Target Name="CopyToMods" AfterTargets="Build">
+    <Copy
+      SourceFiles="$(OutputPath)$(AssemblyName).dll"
+      DestinationFolder="$(GamePath)\Mods\AgeRegression"
+      SkipUnchangedFiles="true" />
+    <Copy
+      SourceFiles="manifest.json"
+      DestinationFolder="$(GamePath)\Mods\AgeRegression"
+      SkipUnchangedFiles="true" />
+    <ItemGroup>
+      <AssetFiles Include="assets\**\*" />
+    </ItemGroup>
+    <Copy
+      SourceFiles="@(AssetFiles)"
+      DestinationFiles="@(AssetFiles->'$(GamePath)\Mods\AgeRegression\assets\%(RecursiveDir)%(Filename)%(Extension)')"
+      SkipUnchangedFiles="true" />
+  </Target>
+
+  <!-- Creates a self-contained release folder at bin\Release\AgeRegression-Release\ -->
+  <Target Name="BuildRelease" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+    <PropertyGroup>
+      <ReleaseDir>$(MSBuildProjectDirectory)\bin\Release\AgeRegression-Release</ReleaseDir>
+    </PropertyGroup>
+    <MakeDir Directories="$(ReleaseDir)" />
+    <Copy
+      SourceFiles="$(OutputPath)$(AssemblyName).dll"
+      DestinationFolder="$(ReleaseDir)"
+      SkipUnchangedFiles="true" />
+    <Copy
+      SourceFiles="manifest.json"
+      DestinationFolder="$(ReleaseDir)"
+      SkipUnchangedFiles="true" />
+    <ItemGroup>
+      <ReleaseAssets Include="assets\**\*" />
+    </ItemGroup>
+    <Copy
+      SourceFiles="@(ReleaseAssets)"
+      DestinationFiles="@(ReleaseAssets->'$(ReleaseDir)\assets\%(RecursiveDir)%(Filename)%(Extension)')"
+      SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>

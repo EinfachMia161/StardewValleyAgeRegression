@@ -1,0 +1,74 @@
+{
+  "PackId": "Abigail_spouse",
+  "DisplayName": "Abigail Spouse Dialogue",
+  "Entries": [
+    {
+      "Key": "abigail_spouse_morning_little",
+      "Text": "Morning, cutie. Ready to take on the day? Or do you just want to stay in and be little for a while?",
+      "Conditions": {
+        "RegressionStages": [ "little", "middle" ],
+        "IsMarried": true,
+        "TimeFrom": 600,
+        "TimeTo": 1000
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "abigail_spouse_morning_baby",
+      "Text": "Awww, good morning, baby. You're so cute when you're like this. Come here.",
+      "Conditions": {
+        "RegressionStages": [ "baby" ],
+        "IsMarried": true,
+        "TimeFrom": 600,
+        "TimeTo": 1000
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "abigail_spouse_diaper_teasing",
+      "Text": "Okay, I'm not going to say anything... except that you're adorable and you definitely need a change.",
+      "Conditions": {
+        "IsMarried": true,
+        "IsWearingDiaper": true,
+        "DiaperConditions": [ "wet", "soaked" ],
+        "NpcPersonalityTags": [ "teasing" ]
+      },
+      "Weight": 2,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "abigail_spouse_diaper_caring",
+      "Text": "Hey, I noticed. Let's get you sorted out, okay? No big deal.",
+      "Conditions": {
+        "IsMarried": true,
+        "IsWearingDiaper": true,
+        "DiaperConditions": [ "wet", "soaked" ],
+        "NpcPersonalityTags": [ "supportive" ]
+      },
+      "Weight": 2,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "abigail_spouse_comfort_low",
+      "Text": "Hey. Hey. Look at me. You're okay. I'm right here. What do you need?",
+      "Conditions": {
+        "IsMarried": true,
+        "MaxComfortNormalized": 0.25
+      },
+      "Weight": 3,
+      "CooldownDays": 1
+    },
+    {
+      "Key": "abigail_spouse_plushie",
+      "Text": "Is that your bunny? Good. You should always have your bunny.",
+      "Conditions": {
+        "IsMarried": true,
+        "RequiredAccessories": [ "plushie_bunny" ]
+      },
+      "Weight": 2,
+      "CooldownDays": 3
+    }
+  ]
+}
