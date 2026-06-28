@@ -4,7 +4,9 @@ using AgeRegression.Events;
 using AgeRegression.Systems;
 using AgeRegression.Utilities;
 using StardewModdingAPI;
+using StardewModdingAPI.Framework.Logging;
 using Xunit;
+
 
 namespace AgeRegression.Tests;
 
@@ -236,10 +238,21 @@ public sealed class NotificationSystemTests
 /// </summary>
 internal sealed class TestMonitor : IMonitor
 {
-    public void Log(string message) { }
-    public void Log(string message, LogLevel level) { }
-    public void LogOnce(string message) { }
-    public void LogOnce(string message, LogLevel level) { }
-    public void VerboseLog(string message) { }
     public bool IsVerbose { get; set; }
+
+    public void Log(string message, LogLevel level = LogLevel.Trace)
+    {
+    }
+
+    public void LogOnce(string message, LogLevel level = LogLevel.Trace)
+    {
+    }
+
+    public void VerboseLog(string message)
+    {
+    }
+
+    public void VerboseLog(ref VerboseLogStringHandler message)
+    {
+    }
 }

@@ -9,6 +9,7 @@ using AgeRegression.Patches;
 using AgeRegression.Persistence;
 using AgeRegression.State;
 using AgeRegression.Systems;
+using AgeRegression.UI;
 using AgeRegression.Utilities;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
@@ -42,6 +43,7 @@ public sealed class ModEntry : Mod
     private NpcReactionSystem _npcReactionSystem = null!;
     private FurnitureProximitySystem _furnitureProximitySystem = null!;
     private NotificationSystem _notificationSystem = null!;
+    private StatusHud _statusHud = null!;
     private GameEventManager _gameEventManager = null!;
 
     // -------------------------------------------------------------------------
@@ -141,6 +143,9 @@ public sealed class ModEntry : Mod
         _notificationSystem = new NotificationSystem(
             _stateManager, _dataLoader, cfg, _eventBus, _log);
 
+        _statusHud = new StatusHud(
+            _stateManager, _dataLoader, cfg, _eventBus, _log);
+
         var router        = new NpcReactionRouter(_dataLoader, _log);
         var tokenResolver = new DialogueTokenResolver(_dataLoader);
         var dialogueManager = new DialogueManager(
@@ -196,6 +201,7 @@ public sealed class ModEntry : Mod
         helper.Events.GameLoop.Saving       += OnSaving;
         helper.Events.GameLoop.ReturnedToTitle += OnReturnedToTitle;
         helper.Events.GameLoop.UpdateTicked += OnUpdateTicked;
+        helper.Events.Display.Rendered      += OnRendered;
         helper.Events.Input.ButtonPressed   += OnButtonPressed;
     }
 
@@ -206,6 +212,7 @@ public sealed class ModEntry : Mod
         _needsSystem.OnSaveLoaded();
         _furnitureProximitySystem.Reset();
         _notificationSystem.OnSaveLoaded();
+        _statusHud.OnSaveLoaded();
     }
 
     private void OnDayStarted(object? sender, DayStartedEventArgs e)
@@ -239,6 +246,14 @@ public sealed class ModEntry : Mod
     private void OnUpdateTicked(object? sender, UpdateTickedEventArgs e)
     {
         _furnitureProximitySystem.OnUpdateTicked();
+    }
+
+    private void OnRendered(object? sender, RenderedEventArgs e)
+    {
+        if (_statusHud.ShouldRender())
+        {
+            HudRenderer.Render(_statusHud, e.SpriteBatch);
+        }
     }
 
     private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)

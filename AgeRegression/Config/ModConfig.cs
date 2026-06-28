@@ -36,4 +36,7 @@ public sealed class ModConfig
 
     /// <summary>Settings governing player notifications.</summary>
     public NotificationConfig Notifications { get; set; } = new();
+
+    /// <summary>Settings governing the in-game status HUD overlay.</summary>
+    public HudConfig Hud { get; set; } = new();
 }
