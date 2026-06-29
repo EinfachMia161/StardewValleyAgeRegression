@@ -88,4 +88,45 @@ public sealed class DataLoaderFallbackTests
         baby!.StatModifiers.SpeedMultiplier.Should().BeLessThan(1.0f);
         baby.StatModifiers.CanUseTools.Should().BeFalse();
     }
+
+    // --- Diaper Loading Tests ---
+
+    [Fact]
+    public void LoadAll_DiaperTypes_JsonLoadsCorrectly()
+    {
+        var provider = new InMemoryAssetProvider(
+            new Dictionary<string, string>
+            {
+                ["assets/data/diaper-types.json"] = @"[
+                    { ""Id"": ""test"", ""DisplayName"": ""Test Diaper"",
+                      ""MaxCapacity"": 100, ""AbsorptionRate"": 1.0,
+                      ""EquipComfortBonus"": 5, ""Price"": 50 }
+                ]"
+            });
+
+        var loader = new DataLoader(provider, new LogHelper(NullMonitor.Instance));
+        loader.LoadAll();
+        loader.DiaperTypes.Should().HaveCount(1);
+        loader.DiaperTypes[0].Id.Should().Be("test");
+    }
+
+    [Fact]
+    public void GetDiaperType_ReturnsCorrectType()
+    {
+        var provider = new InMemoryAssetProvider(
+            new Dictionary<string, string>
+            {
+                ["assets/data/diaper-types.json"] = @"[
+                    { ""Id"": ""premium_diaper"", ""DisplayName"": ""Premium Diaper"",
+                      ""MaxCapacity"": 175, ""AbsorptionRate"": 1.2,
+                      ""EquipComfortBonus"": 10, ""Price"": 120 }
+                ]"
+            });
+
+        var loader = new DataLoader(provider, new LogHelper(NullMonitor.Instance));
+        loader.LoadAll();
+        var diaper = loader.GetDiaperType("premium_diaper");
+        diaper.Should().NotBeNull();
+        diaper!.DisplayName.Should().Be("Premium Diaper");
+    }
 }

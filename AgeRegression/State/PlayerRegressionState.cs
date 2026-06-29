@@ -17,6 +17,8 @@ public sealed class PlayerRegressionState
 
     public MoodState Mood { get; set; } = new();
 
+    public CareState Care { get; set; } = new();
+
     public HashSet<string> EquippedAccessories { get; set; } = new();
 
     public Dictionary<string, int> DialogueCooldowns { get; set; } = new();

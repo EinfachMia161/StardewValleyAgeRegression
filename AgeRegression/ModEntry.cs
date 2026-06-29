@@ -40,6 +40,7 @@ public sealed class ModEntry : Mod
     private MoodSystem _moodSystem = null!;
     private NeedsSystem _needsSystem = null!;
     private WardrobeSystem _wardrobeSystem = null!;
+    private CareSystem _careSystem = null!;
     private NpcReactionSystem _npcReactionSystem = null!;
     private FurnitureProximitySystem _furnitureProximitySystem = null!;
     private NotificationSystem _notificationSystem = null!;
@@ -137,6 +138,9 @@ public sealed class ModEntry : Mod
         _wardrobeSystem = new WardrobeSystem(
             _stateManager, _dataLoader, cfg, _log);
 
+        _careSystem = new CareSystem(
+            _stateManager, _eventBus, _log);
+
         _furnitureProximitySystem = new FurnitureProximitySystem(
             _stateManager, _dataLoader, cfg, _eventBus, _log);
 
@@ -218,6 +222,7 @@ public sealed class ModEntry : Mod
     private void OnDayStarted(object? sender, DayStartedEventArgs e)
     {
         _stateManager.OnDayStarted();
+        _careSystem.OnDayStarted();
         _diaperSystem.OnDayStarted();
         _comfortSystem.OnDayStarted();
         _needsSystem.OnDayStarted();

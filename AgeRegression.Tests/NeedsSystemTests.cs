@@ -75,7 +75,7 @@ public sealed class NeedsSystemTests
     }
 
     [Fact]
-    public void Migration_V1ToV2_SetsSchemaVersion2()
+    public void Migration_V1ToV3_SetsSchemaVersion3()
     {
         var migrator = new AgeRegression.Persistence.SaveDataMigrator(
             new LogHelper(NullMonitor.Instance));
@@ -84,7 +84,7 @@ public sealed class NeedsSystemTests
             SchemaVersion = 1
         };
         migrator.Migrate(data).Should().BeTrue();
-        data.SchemaVersion.Should().Be(2);
+        data.SchemaVersion.Should().Be(3);
     }
 
     private static PlayerRegressionState MakeState(

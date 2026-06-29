@@ -125,7 +125,7 @@ public sealed class PersistenceManager
     /// This method is <c>public static</c> so unit tests can call it
     /// directly without a live <see cref="Farmer"/> instance, eliminating
     /// the need to duplicate the serialization logic in test helpers.
-    /// Pass <c>0</c> for <paramref name="absoluteDay"/> in tests where
+    /// Pass <c>0</c> for <see cref="absoluteDay"/> in tests where
     /// the day value is not under test.
     /// </para>
     /// </summary>
@@ -161,6 +161,11 @@ public sealed class PersistenceManager
             HungerLastThresholdId    = state.Needs.Hunger.LastKnownThresholdId,
             ThirstNormalized         = state.Needs.Thirst.Normalized,
             ThirstLastThresholdId    = state.Needs.Thirst.LastKnownThresholdId,
+            // v3 — care
+            LastDiaperChangeAbsoluteDay = state.Care.LastDiaperChangeAbsoluteDay,
+            CareActionsToday         = state.Care.CareActionsToday,
+            LastCareActionId         = state.Care.LastCareActionId,
+            LastCareDayAbsolute      = state.Care.LastCareDayAbsolute,
             // additive fields
             CurrentMoodId            = state.Mood.CurrentMoodId,
             SpouseDailyDialogueLastGivenAbsoluteDay =
@@ -221,6 +226,13 @@ public sealed class PersistenceManager
                     Normalized           = data.ThirstNormalized,
                     LastKnownThresholdId = data.ThirstLastThresholdId
                 }
+            },
+            Care = new CareState
+            {
+                LastDiaperChangeAbsoluteDay = data.LastDiaperChangeAbsoluteDay,
+                CareActionsToday            = data.CareActionsToday,
+                LastCareActionId            = data.LastCareActionId,
+                LastCareDayAbsolute         = data.LastCareDayAbsolute
             },
             Mood = new MoodState
             {

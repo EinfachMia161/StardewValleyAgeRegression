@@ -70,29 +70,37 @@ public sealed class EventConditionEvaluator
         PlayerRegressionState state,
         RegressionStageData stage)
     {
+        var currentDay = AbsoluteDayHelper.GetCurrentAbsoluteDay();
+        var daysSinceLastDiaperChange = AbsoluteDayHelper.DaysBetween(
+            state.Care.LastDiaperChangeAbsoluteDay, currentDay);
+
         return new DialogueContext
         {
-            RegressionStageId    = stage.Id,
-            RegressionStageOrder = stage.Order,
-            DiaperConditionId    = state.Diaper.IsWearingDiaper
+            RegressionStageId         = stage.Id,
+            RegressionStageOrder      = stage.Order,
+            DiaperConditionId         = state.Diaper.IsWearingDiaper
                 ? state.Diaper.ConditionId : "none",
-            IsWearingDiaper      = state.Diaper.IsWearingDiaper,
-            ContinenceNormalized = state.Needs.Continence.Value.Normalized,
-            ContinenceThresholdId = state.Needs.Continence.Value.LastKnownThresholdId,
-            HungerNormalized     = state.Needs.Hunger.Normalized,
-            ThirstNormalized     = state.Needs.Thirst.Normalized,
-            ComfortNormalized    = state.Comfort.GetNormalized(_config.Comfort.MaxComfort),
-            EquippedAccessories  = state.EquippedAccessories,
-            NpcName              = string.Empty,
-            FriendshipHearts     = 0,
-            IsMarried            = !string.IsNullOrEmpty(StardewValley.Game1.player.spouse),
-            NpcPersonalityTags   = Array.Empty<string>(),
-            Season               = GameHelper.GetCurrentSeason(),
-            TimeOfDay            = GameHelper.GetCurrentTime(),
-            LocationName         = GameHelper.GetCurrentLocationName(),
-            Weather              = "sunny",
-            IsFestivalDay        = false,
-            GameFlags            = new HashSet<string>()
+            IsWearingDiaper           = state.Diaper.IsWearingDiaper,
+            EquippedDiaperTypeId      = state.Diaper.EquippedDiaperTypeId,
+            ContinenceNormalized      = state.Needs.Continence.Value.Normalized,
+            ContinenceThresholdId     = state.Needs.Continence.Value.LastKnownThresholdId,
+            HungerNormalized          = state.Needs.Hunger.Normalized,
+            ThirstNormalized          = state.Needs.Thirst.Normalized,
+            ComfortNormalized         = state.Comfort.GetNormalized(_config.Comfort.MaxComfort),
+            EquippedAccessories       = state.EquippedAccessories,
+            DaysSinceLastDiaperChange = daysSinceLastDiaperChange,
+            CareActionsToday          = state.Care.CareActionsToday,
+            LastCareActionId          = state.Care.LastCareActionId,
+            NpcName                   = string.Empty,
+            FriendshipHearts          = 0,
+            IsMarried                 = !string.IsNullOrEmpty(StardewValley.Game1.player.spouse),
+            NpcPersonalityTags        = Array.Empty<string>(),
+            Season                    = GameHelper.GetCurrentSeason(),
+            TimeOfDay                 = GameHelper.GetCurrentTime(),
+            LocationName              = GameHelper.GetCurrentLocationName(),
+            Weather                   = "sunny",
+            IsFestivalDay             = false,
+            GameFlags                 = new HashSet<string>()
         };
     }
 }

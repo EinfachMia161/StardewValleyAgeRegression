@@ -128,7 +128,8 @@ public sealed class StateManager
     {
         if (_state is null) return;
 
-        _state.AccidentsToday      = 0;
+        _state.AccidentsToday = 0;
+        _state.Needs.Continence.LostControlToday = false;
         _state.LastUpdatedAbsoluteDay = AbsoluteDayHelper.GetCurrentAbsoluteDay();
 
         PruneDialogueCooldowns();
@@ -253,30 +254,107 @@ public sealed class StateManager
     }
 
     /// <summary>
-    /// Equips an accessory by ID. Publishes nothing — accessories have
-    /// no top-level event; callers that need to react (e.g.
-    /// <see cref="ComfortSystem"/>) subscribe to the item interaction
-    /// path. Returns <c>false</c> if state is not loaded or the ID is
-    /// already equipped.
+    /// Equips an accessory by ID and publishes
+    /// <see cref="AccessoryChangedEventArgs"/>.
+    /// Returns <c>false</c> if state is not loaded or the ID is already equipped.
     /// </summary>
     public bool EquipAccessory(string accessoryId)
     {
         if (_state is null) return false;
-        return _state.EquippedAccessories.Add(accessoryId);
+
+        if (_state.EquippedAccessories.Add(accessoryId))
+        {
+            _eventBus.Publish(new AccessoryChangedEventArgs(
+                accessoryId, true, _state.PlayerId));
+            return true;
+        }
+        return false;
     }
 
     /// <summary>
-    /// Unequips an accessory by ID. Returns <c>false</c> if state is
-    /// not loaded or the ID was not equipped.
+    /// Unequips an accessory by ID and publishes
+    /// <see cref="AccessoryChangedEventArgs"/>.
+    /// Returns <c>false</c> if state is not loaded or the ID was not equipped.
     /// </summary>
     public bool UnequipAccessory(string accessoryId)
     {
         if (_state is null) return false;
-        return _state.EquippedAccessories.Remove(accessoryId);
+
+        if (_state.EquippedAccessories.Remove(accessoryId))
+        {
+            _eventBus.Publish(new AccessoryChangedEventArgs(
+                accessoryId, false, _state.PlayerId));
+            return true;
+        }
+        return false;
     }
 
     /// <summary>
-    /// Updates the mood ID and publishes
+    /// Updates the player's continence value and publishes
+    /// <see cref="NeedThresholdCrossedEventArgs"/> and
+    /// <see cref="ContinenceThresholdCrossedEventArgs"/> if thresholds changed.
+    /// Uses an epsilon comparison to avoid spurious events.
+    /// </summary>
+    public void UpdateContinence(float delta)
+    {
+        if (_state is null) return;
+
+        var before = _state.Needs.Continence.Value.Normalized;
+        _state.Needs.Continence.Value.ApplyDelta(delta);
+        var after = _state.Needs.Continence.Value.Normalized;
+
+        // Publish value changed event
+        if (Math.Abs(before - after) >= 0.0001f)
+        {
+            _eventBus.Publish(new NeedsValueChangedEventArgs(
+                "continence", before, after, _state.PlayerId));
+
+            // Check thresholds
+            var thresholds = _dataLoader.NeedsThresholdSets
+                .Where(s => s.NeedId.Equals("continence", StringComparison.OrdinalIgnoreCase))
+                .SelectMany(s => s.Thresholds)
+                .OrderBy(t => t.MinNormalized)
+                .ToList();
+
+            var previousBand = thresholds.LastOrDefault(t => t.MinNormalized <= before);
+            var currentBand = thresholds.LastOrDefault(t => t.MinNormalized <= after);
+
+            if (previousBand?.Id != currentBand?.Id)
+            {
+                var previousId = previousBand?.Id ?? string.Empty;
+                var currentId = currentBand?.Id ?? string.Empty;
+
+                _state.Needs.Continence.Value.LastKnownThresholdId = currentId;
+
+                var isDeteriorating = after < before;
+                var isLowestBand = currentBand != null &&
+                    thresholds.All(t => t.MinNormalized >= currentBand.MinNormalized);
+
+                _log.Debug(
+                    "Continence threshold crossed: '{0}' → '{1}' ({2:P1}).",
+                    previousId, currentId, after);
+
+                _eventBus.Publish(new NeedThresholdCrossedEventArgs(
+                    "continence",
+                    previousId,
+                    currentId,
+                    after,
+                    isDeteriorating,
+                    _state.PlayerId));
+
+                _eventBus.Publish(new ContinenceThresholdCrossedEventArgs(
+                    previousId,
+                    currentId,
+                    after,
+                    isLowestBand && isDeteriorating,
+                    _state.Diaper.IsWearingDiaper,
+                    _state.PlayerId));
+            }
+        }
+    }
+
+    /// <summary>
+    /// Updates the player's mood ID and publishes
     /// <see cref="MoodChangedEventArgs"/> if it changed.
     /// </summary>
     public void UpdateMood(string newMoodId)

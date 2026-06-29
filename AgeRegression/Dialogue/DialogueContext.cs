@@ -29,6 +29,9 @@ public sealed class DialogueContext
     /// <summary>Whether the player is wearing a diaper.</summary>
     public bool IsWearingDiaper { get; init; } = false;
 
+    /// <summary>ID of the currently equipped diaper type.</summary>
+    public string? EquippedDiaperTypeId { get; init; }
+
     /// <summary>Normalized continence value (0–1).</summary>
     public float ContinenceNormalized { get; init; } = 1f;
 
@@ -47,6 +50,26 @@ public sealed class DialogueContext
     /// <summary>Currently equipped accessory IDs.</summary>
     public IReadOnlySet<string> EquippedAccessories { get; init; } =
         new HashSet<string>();
+
+    // -------------------------------------------------------------------------
+    // Care state (for dialogue context)
+    // -------------------------------------------------------------------------
+
+    /// <summary>
+    /// Absolute day number of the last diaper change.
+    /// Used for conditions like "DaysSinceLastDiaperChange > 2".
+    /// </summary>
+    public int DaysSinceLastDiaperChange { get; init; } = 0;
+
+    /// <summary>
+    /// Number of care actions performed today.
+    /// </summary>
+    public int CareActionsToday { get; init; } = 0;
+
+    /// <summary>
+    /// The ID of the last care action performed.
+    /// </summary>
+    public string LastCareActionId { get; init; } = string.Empty;
 
     // -------------------------------------------------------------------------
     // NPC context
@@ -128,38 +151,46 @@ public sealed class DialogueContext
         var continenceThreshold =
             playerState.Needs.Continence.Value.LastKnownThresholdId;
 
+        var currentDay = AgeRegression.Utilities.AbsoluteDayHelper.GetCurrentAbsoluteDay();
+        var daysSinceLastDiaperChange = AgeRegression.Utilities.AbsoluteDayHelper.DaysBetween(
+            playerState.Care.LastDiaperChangeAbsoluteDay, currentDay);
+
         var gameFlags = new HashSet<string>(
             StardewValley.Game1.player.mailReceived
                 .Concat(StardewValley.Game1.player.eventsSeen
-                    .Select(id => $"event_{id}")));
+                        .Select(id => $"event_{id}")));
 
         return new DialogueContext
         {
-            RegressionStageId    = currentStage.Id,
-            RegressionStageOrder = currentStage.Order,
-            DiaperConditionId    = playerState.Diaper.IsWearingDiaper
+            RegressionStageId       = currentStage.Id,
+            RegressionStageOrder    = currentStage.Order,
+            DiaperConditionId       = playerState.Diaper.IsWearingDiaper
                 ? playerState.Diaper.ConditionId : "none",
-            IsWearingDiaper      = playerState.Diaper.IsWearingDiaper,
-            ContinenceNormalized = playerState.Needs.Continence.Value.Normalized,
-            ContinenceThresholdId = continenceThreshold,
-            HungerNormalized     = playerState.Needs.Hunger.Normalized,
-            ThirstNormalized     = playerState.Needs.Thirst.Normalized,
-            ComfortNormalized    = playerState.Comfort.GetNormalized(maxComfort),
-            EquippedAccessories  = playerState.EquippedAccessories,
-            NpcName              = npc.Name,
-            FriendshipHearts     = friendship,
-            IsMarried            = isMarried,
-            NpcPersonalityTags   = npcProfile?.PersonalityTags
+            IsWearingDiaper         = playerState.Diaper.IsWearingDiaper,
+            EquippedDiaperTypeId    = playerState.Diaper.EquippedDiaperTypeId,
+            ContinenceNormalized    = playerState.Needs.Continence.Value.Normalized,
+            ContinenceThresholdId   = continenceThreshold,
+            HungerNormalized        = playerState.Needs.Hunger.Normalized,
+            ThirstNormalized        = playerState.Needs.Thirst.Normalized,
+            ComfortNormalized       = playerState.Comfort.GetNormalized(maxComfort),
+            EquippedAccessories     = playerState.EquippedAccessories,
+            DaysSinceLastDiaperChange = daysSinceLastDiaperChange,
+            CareActionsToday        = playerState.Care.CareActionsToday,
+            LastCareActionId        = playerState.Care.LastCareActionId,
+            NpcName                 = npc.Name,
+            FriendshipHearts        = friendship,
+            IsMarried               = isMarried,
+            NpcPersonalityTags      = npcProfile?.PersonalityTags
                 ?? (IReadOnlyList<string>)Array.Empty<string>(),
-            Season               = StardewValley.Game1.currentSeason,
-            TimeOfDay            = StardewValley.Game1.timeOfDay,
-            LocationName         = StardewValley.Game1.currentLocation?.Name
+            Season                  = StardewValley.Game1.currentSeason,
+            TimeOfDay               = StardewValley.Game1.timeOfDay,
+            LocationName            = StardewValley.Game1.currentLocation?.Name
                 ?? string.Empty,
-            Weather              = weather,
-            IsFestivalDay        = StardewValley.Utility.isFestivalDay(
+            Weather                 = weather,
+            IsFestivalDay           = StardewValley.Utility.isFestivalDay(
                 StardewValley.Game1.dayOfMonth,
                 StardewValley.Game1.season),
-            GameFlags            = gameFlags
+            GameFlags               = gameFlags
         };
     }
 }

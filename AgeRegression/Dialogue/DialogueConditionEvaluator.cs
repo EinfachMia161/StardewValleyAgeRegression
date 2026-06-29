@@ -41,13 +41,17 @@ public sealed class DialogueConditionEvaluator
             && CheckLocations(conditions, context)
             && CheckDiaperConditions(conditions, context)
             && CheckIsWearingDiaper(conditions, context)
+            && CheckEquippedDiaperIds(conditions, context)
             && CheckAccessories(conditions, context)
             && CheckNpcPersonality(conditions, context)
             && CheckGameFlags(conditions, context)
             && CheckContinenceThreshold(conditions, context)
             && CheckHungerRange(conditions, context)
             && CheckThirstRange(conditions, context)
-            && CheckComfortRange(conditions, context);
+            && CheckComfortRange(conditions, context)
+            && CheckCareActionIds(conditions, context)
+            && CheckCareActionsToday(conditions, context)
+            && CheckDaysSinceLastDiaperChange(conditions, context);
     }
 
     private static bool CheckRegressionStages(
@@ -129,6 +133,15 @@ public sealed class DialogueConditionEvaluator
         return true;
     }
 
+    private static bool CheckEquippedDiaperIds(
+        DialogueConditions c, DialogueContext ctx)
+    {
+        if (c.EquippedDiaperIds is null || c.EquippedDiaperIds.Count == 0)
+            return true;
+        return c.EquippedDiaperIds.Contains(
+            ctx.EquippedDiaperTypeId, StringComparer.OrdinalIgnoreCase);
+    }
+
     private static bool CheckAccessories(
         DialogueConditions c, DialogueContext ctx)
     {
@@ -202,6 +215,36 @@ public sealed class DialogueConditionEvaluator
             return false;
         if (c.MinComfortNormalized.HasValue &&
             ctx.ComfortNormalized < c.MinComfortNormalized.Value)
+            return false;
+        return true;
+    }
+
+    private static bool CheckCareActionIds(
+        DialogueConditions c, DialogueContext ctx)
+    {
+        if (c.CareActionIds is null || c.CareActionIds.Count == 0)
+            return true;
+        return c.CareActionIds.Contains(
+            ctx.LastCareActionId, StringComparer.OrdinalIgnoreCase);
+    }
+
+    private static bool CheckCareActionsToday(
+        DialogueConditions c, DialogueContext ctx)
+    {
+        if (c.MinCareActionsToday.HasValue &&
+            ctx.CareActionsToday < c.MinCareActionsToday.Value)
+            return false;
+        if (c.MaxCareActionsToday.HasValue &&
+            ctx.CareActionsToday > c.MaxCareActionsToday.Value)
+            return false;
+        return true;
+    }
+
+    private static bool CheckDaysSinceLastDiaperChange(
+        DialogueConditions c, DialogueContext ctx)
+    {
+        if (c.MaxDaysSinceLastDiaperChange.HasValue &&
+            ctx.DaysSinceLastDiaperChange > c.MaxDaysSinceLastDiaperChange.Value)
             return false;
         return true;
     }

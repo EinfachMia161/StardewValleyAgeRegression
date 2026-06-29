@@ -14,7 +14,6 @@ namespace AgeRegression.Persistence;
 ///   <item>Add a <c>case</c> to the switch in
 ///   <see cref="Migrate"/>.</item>
 /// </list>
-/// </para>
 /// </summary>
 public sealed class SaveDataMigrator
 {
@@ -23,7 +22,7 @@ public sealed class SaveDataMigrator
     /// Must match <see cref="SaveDataModel.SchemaVersion"/> after
     /// migration completes.
     /// </summary>
-    public const int CurrentSchemaVersion = 2;
+    public const int CurrentSchemaVersion = 3;
 
     private readonly LogHelper _log;
 
@@ -65,6 +64,9 @@ public sealed class SaveDataMigrator
                 case 1:
                     MigrateV1ToV2(data);
                     break;
+                case 2:
+                    MigrateV2ToV3(data);
+                    break;
 
                 default:
                     _log.Warn(
@@ -84,7 +86,7 @@ public sealed class SaveDataMigrator
     // -------------------------------------------------------------------------
 
     /// <summary>
-    /// v1 ? v2: Added needs state (continence, hunger, thirst).
+    /// v1 → v2: Added needs state (continence, hunger, thirst).
     /// All new fields have safe defaults already defined on
     /// <see cref="SaveDataModel"/>, so deserialization from a v1 JSON
     /// blob produces correct defaults automatically. We only need to
@@ -93,8 +95,20 @@ public sealed class SaveDataMigrator
     private void MigrateV1ToV2(SaveDataModel data)
     {
         _log.Debug(
-            "Applying migration v1 ? v2: " +
+            "Applying migration v1 → v2: " +
             "initializing needs state with defaults.");
         data.SchemaVersion = 2;
+    }
+
+    /// <summary>
+    /// v2 → v3: Added care state.
+    /// All new fields have safe defaults, so we only need to bump the version.
+    /// </summary>
+    private void MigrateV2ToV3(SaveDataModel data)
+    {
+        _log.Debug(
+            "Applying migration v2 → v3: " +
+            "initializing care state with defaults.");
+        data.SchemaVersion = 3;
     }
 }

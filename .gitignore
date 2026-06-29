@@ -1,6 +1,8 @@
 # Build output
 bin/
 obj/
+#placeholder
+AgeRegression/assets/placeholder/
 
 # Visual Studio
 .vs/
@@ -15,3 +17,7 @@ TestResults/
 
 # Logs
 *.log
+
+
+# Kilo local files
+.kilo/

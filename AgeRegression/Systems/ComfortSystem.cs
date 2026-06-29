@@ -76,6 +76,8 @@ public sealed class ComfortSystem
         eventBus.Subscribe<FurnitureProximityChangedEventArgs>(
             OnFurnitureProximityChanged);
         eventBus.Subscribe<DiaperComfortEffectEventArgs>(OnDiaperComfortEffect);
+        eventBus.Subscribe<AccessoryChangedEventArgs>(OnAccessoryChanged);
+        eventBus.Subscribe<CareActionCompletedEventArgs>(OnCareActionCompleted);
     }
 
     public void OnDayStarted()
@@ -157,6 +159,16 @@ public sealed class ComfortSystem
     private void OnDiaperComfortEffect(DiaperComfortEffectEventArgs e)
     {
         ApplyDirectAdjustment(e.Delta, e.Reason);
+    }
+
+    private void OnAccessoryChanged(AccessoryChangedEventArgs e)
+    {
+        ApplyImmediateModifiers("accessory_changed");
+    }
+
+    private void OnCareActionCompleted(CareActionCompletedEventArgs e)
+    {
+        ApplyImmediateModifiers("care_action_completed");
     }
 
     private void ApplyImmediateModifiers(string reason)
@@ -250,32 +262,38 @@ public sealed class ComfortSystem
     private DialogueContext BuildComfortContext(PlayerRegressionState state)
     {
         var stage = _dataLoader.GetStage(state.CurrentStageId);
+        var currentDay = AbsoluteDayHelper.GetCurrentAbsoluteDay();
+        var daysSinceLastDiaperChange = AbsoluteDayHelper.DaysBetween(
+            state.Care.LastDiaperChangeAbsoluteDay, currentDay);
 
         return new DialogueContext
         {
-            RegressionStageId = state.CurrentStageId,
-            RegressionStageOrder = stage?.Order ?? 0,
-            DiaperConditionId = state.Diaper.IsWearingDiaper
+            RegressionStageId         = state.CurrentStageId,
+            RegressionStageOrder      = stage?.Order ?? 0,
+            DiaperConditionId         = state.Diaper.IsWearingDiaper
                 ? state.Diaper.ConditionId : "none",
-            IsWearingDiaper = state.Diaper.IsWearingDiaper,
-            ContinenceNormalized = state.Needs.Continence.Value.Normalized,
-            ContinenceThresholdId =
-                state.Needs.Continence.Value.LastKnownThresholdId,
-            HungerNormalized = state.Needs.Hunger.Normalized,
-            ThirstNormalized = state.Needs.Thirst.Normalized,
-            ComfortNormalized = state.Comfort.GetNormalized(
+            IsWearingDiaper           = state.Diaper.IsWearingDiaper,
+            EquippedDiaperTypeId      = state.Diaper.EquippedDiaperTypeId,
+            ContinenceNormalized        = state.Needs.Continence.Value.Normalized,
+            ContinenceThresholdId       = state.Needs.Continence.Value.LastKnownThresholdId,
+            HungerNormalized            = state.Needs.Hunger.Normalized,
+            ThirstNormalized            = state.Needs.Thirst.Normalized,
+            ComfortNormalized           = state.Comfort.GetNormalized(
                 _config.Comfort.MaxComfort),
-            EquippedAccessories = state.EquippedAccessories,
-            NpcName = string.Empty,
-            FriendshipHearts = 0,
-            IsMarried = false,
-            NpcPersonalityTags = Array.Empty<string>(),
-            Season = GameHelper.GetCurrentSeason(),
-            TimeOfDay = GameHelper.GetCurrentTime(),
-            LocationName = GameHelper.GetCurrentLocationName(),
-            Weather = GetCurrentWeather(),
-            IsFestivalDay = false,
-            GameFlags = new HashSet<string>()
+            EquippedAccessories       = state.EquippedAccessories,
+            DaysSinceLastDiaperChange = daysSinceLastDiaperChange,
+            CareActionsToday          = state.Care.CareActionsToday,
+            LastCareActionId          = state.Care.LastCareActionId,
+            NpcName                   = string.Empty,
+            FriendshipHearts          = 0,
+            IsMarried                 = false,
+            NpcPersonalityTags        = Array.Empty<string>(),
+            Season                    = GameHelper.GetCurrentSeason(),
+            TimeOfDay                 = GameHelper.GetCurrentTime(),
+            LocationName              = GameHelper.GetCurrentLocationName(),
+            Weather                   = GetCurrentWeather(),
+            IsFestivalDay             = false,
+            GameFlags                 = new HashSet<string>()
         };
     }
 

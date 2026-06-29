@@ -123,6 +123,13 @@ public sealed class DialogueConditions
     /// </summary>
     public bool? IsWearingDiaper { get; set; }
 
+    /// <summary>
+    /// Required equipped diaper type ID(s). Used for comfort modifiers.
+    /// All listed diapers must match the currently equipped diaper.
+    /// <c>null</c> means diaper type is not checked.
+    /// </summary>
+    public List<string>? EquippedDiaperIds { get; set; }
+
     // --- Accessories ---
 
     /// <summary>
@@ -194,4 +201,30 @@ public sealed class DialogueConditions
     /// <c>null</c> means no maximum.
     /// </summary>
     public float? MaxComfortNormalized { get; set; }
+
+    // --- Care ---
+
+    /// <summary>
+    /// Required care action ID(s) that was last performed.
+    /// <c>null</c> means care action is not checked.
+    /// </summary>
+    public List<string>? CareActionIds { get; set; }
+
+    /// <summary>
+    /// Minimum number of care actions performed today.
+    /// <c>null</c> means no minimum.
+    /// </summary>
+    public int? MinCareActionsToday { get; set; }
+
+    /// <summary>
+    /// Maximum number of care actions performed today.
+    /// <c>null</c> means no maximum.
+    /// </summary>
+    public int? MaxCareActionsToday { get; set; }
+
+    /// <summary>
+    /// Maximum days since last diaper change.
+    /// <c>null</c> means no restriction.
+    /// </summary>
+    public int? MaxDaysSinceLastDiaperChange { get; set; }
 }

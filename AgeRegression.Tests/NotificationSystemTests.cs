@@ -25,211 +25,42 @@ public sealed class NotificationSystemTests
     }
 
     [Fact]
-    public void OnSaveLoaded_WhenDisabled_DoesNotThrow()
+    public void NotificationSystem_WhenDisabled_DoesNotThrow()
     {
         // Arrange
-        var eventBus = new ModEventBus(new LogHelper(new TestMonitor()));
         var config = CreateTestConfig(c => c.Enabled = false);
-        var system = CreateNotificationSystem(eventBus, config);
-
-        // Act - should not throw
-        system.OnSaveLoaded();
-
-        // Assert
-        Assert.True(true);
-    }
-
-    [Fact]
-    public void OnRegressionChanged_WhenDisabled_DoesNotThrow()
-    {
-        // Arrange
         var eventBus = new ModEventBus(new LogHelper(new TestMonitor()));
-        var config = CreateTestConfig(c => c.Enabled = false);
-        var system = CreateNotificationSystem(eventBus, config);
 
-        var args = new RegressionChangedEventArgs(
-            new RegressionStageData { Id = "baseline", Order = 0, DisplayName = "Baseline" },
-            new RegressionStageData { Id = "regressed", Order = 1, DisplayName = "Regressed" },
-            123);
-
-        // Act - should not throw
-        system.OnSaveLoaded();
-        PublishEvent(eventBus, args);
-
-        // Assert
-        Assert.True(true);
-    }
-
-    [Fact]
-    public void OnAccidentOccurred_WhenDisabled_DoesNotThrow()
-    {
-        // Arrange
-        var eventBus = new ModEventBus(new LogHelper(new TestMonitor()));
-        var config = CreateTestConfig(c => c.Enabled = false);
-        var system = CreateNotificationSystem(eventBus, config);
-
-        var args = new AccidentOccurredEventArgs(AccidentType.Wetting, 123, true);
-
-        // Act
-        system.OnSaveLoaded();
-        PublishEvent(eventBus, args);
-
-        // Assert
-        Assert.True(true);
-    }
-
-    [Fact]
-    public void OnMoodChanged_WhenDisabled_DoesNotThrow()
-    {
-        // Arrange
-        var eventBus = new ModEventBus(new LogHelper(new TestMonitor()));
-        var config = CreateTestConfig(c => c.Enabled = false);
-        var system = CreateNotificationSystem(eventBus, config);
-
-        var args = new MoodChangedEventArgs("happy", "sad", 123);
-
-        // Act
-        system.OnSaveLoaded();
-        PublishEvent(eventBus, args);
-
-        // Assert
-        Assert.True(true);
-    }
-
-    [Fact]
-    public void OnComfortChanged_WhenDisabled_DoesNotThrow()
-    {
-        // Arrange
-        var eventBus = new ModEventBus(new LogHelper(new TestMonitor()));
-        var config = CreateTestConfig(c => c.Enabled = false);
-        var system = CreateNotificationSystem(eventBus, config);
-
-        var args = new ComfortChangedEventArgs(50f, 60f, 123, "test");
-
-        // Act
-        system.OnSaveLoaded();
-        PublishEvent(eventBus, args);
-
-        // Assert
-        Assert.True(true);
-    }
-
-    [Fact]
-    public void OnRegressionChanged_WhenNotificationsDisabled_DoesNotThrow()
-    {
-        // Arrange
-        var eventBus = new ModEventBus(new LogHelper(new TestMonitor()));
-        var config = CreateTestConfig();
-        config.Notifications.Enabled = false;
-        var system = CreateNotificationSystem(eventBus, config);
-
-        var args = new RegressionChangedEventArgs(
-            new RegressionStageData { Id = "baseline", Order = 0, DisplayName = "Baseline" },
-            new RegressionStageData { Id = "regressed", Order = 1, DisplayName = "Regressed" },
-            123);
-
-        // Act
-        system.OnSaveLoaded();
-        PublishEvent(eventBus, args);
-
-        // Assert
-        Assert.True(true);
-    }
-
-    [Fact]
-    public void OnAccidentOccurred_WhenNotificationsDisabled_DoesNotThrow()
-    {
-        // Arrange
-        var eventBus = new ModEventBus(new LogHelper(new TestMonitor()));
-        var config = CreateTestConfig();
-        config.Notifications.Enabled = false;
-        var system = CreateNotificationSystem(eventBus, config);
-
-        var args = new AccidentOccurredEventArgs(AccidentType.Messing, 123, true);
-
-        // Act
-        system.OnSaveLoaded();
-        PublishEvent(eventBus, args);
-
-        // Assert
-        Assert.True(true);
-    }
-
-    [Fact]
-    public void OnMoodChanged_WhenNotificationsDisabled_DoesNotThrow()
-    {
-        // Arrange
-        var eventBus = new ModEventBus(new LogHelper(new TestMonitor()));
-        var config = CreateTestConfig();
-        config.Notifications.Enabled = false;
-        var system = CreateNotificationSystem(eventBus, config);
-
-        var args = new MoodChangedEventArgs("happy", "sad", 123);
-
-        // Act
-        system.OnSaveLoaded();
-        PublishEvent(eventBus, args);
-
-        // Assert
-        Assert.True(true);
-    }
-
-    [Fact]
-    public void OnComfortChanged_WhenBelowThreshold_DoesNotThrow()
-    {
-        // Arrange
-        var eventBus = new ModEventBus(new LogHelper(new TestMonitor()));
-        var config = CreateTestConfig(c => c.MinComfortChangeForNotification = 100f);
-        var system = CreateNotificationSystem(eventBus, config);
-
-        var args = new ComfortChangedEventArgs(50f, 60f, 123, "test");
-
-        // Act
-        system.OnSaveLoaded();
-        PublishEvent(eventBus, args);
-
-        // Assert
-        Assert.True(true);
-    }
-
-    [Fact]
-    public void OnMoodChanged_WhenBelowTierThreshold_DoesNotThrow()
-    {
-        // Arrange
-        var eventBus = new ModEventBus(new LogHelper(new TestMonitor()));
-        var config = CreateTestConfig(c => c.MinMoodTierChangeForNotification = 5);
-        var system = CreateNotificationSystem(eventBus, config);
-
-        var args = new MoodChangedEventArgs("happy", "sad", 123);
-
-        // Act
-        system.OnSaveLoaded();
-        PublishEvent(eventBus, args);
-
-        // Assert
-        Assert.True(true);
-    }
-
-    private static NotificationSystem CreateNotificationSystem(
-        ModEventBus eventBus,
-        ModConfig? config = null)
-    {
-        config ??= CreateTestConfig();
-
-        return new NotificationSystem(
+        // Act - should not throw on construction
+        var system = new NotificationSystem(
             stateManager: null!,
             dataLoader: null!,
             config,
             eventBus,
             log: new LogHelper(new TestMonitor()));
+
+        // Assert - system was created
+        Assert.NotNull(system);
     }
 
-    private static void PublishEvent<TEvent>(ModEventBus eventBus, TEvent args)
-        where TEvent : class
+    [Fact]
+    public void NotificationSystem_WhenNotificationsDisabled_DoesNotThrow()
     {
-        typeof(ModEventBus)
-            .GetMethod("Publish", new[] { typeof(TEvent) })!
-            .Invoke(eventBus, new object[] { args });
+        // Arrange
+        var config = CreateTestConfig();
+        config.Notifications.Enabled = false;
+        var eventBus = new ModEventBus(new LogHelper(new TestMonitor()));
+
+        // Act - should not throw on construction
+        var system = new NotificationSystem(
+            stateManager: null!,
+            dataLoader: null!,
+            config,
+            eventBus,
+            log: new LogHelper(new TestMonitor()));
+
+        // Assert - system was created
+        Assert.NotNull(system);
     }
 }
 

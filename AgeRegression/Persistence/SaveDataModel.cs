@@ -17,15 +17,15 @@ namespace AgeRegression.Persistence;
 ///   <item>Additive fields (new fields with safe defaults) do not
 ///   require a schema version bump.</item>
 /// </list>
-/// </para>
+/// </summary>
 ///
 /// <para>
 /// Schema history:
 /// <list type="bullet">
 ///   <item>v1 — Initial schema.</item>
 ///   <item>v2 — Added needs state (continence, hunger, thirst).</item>
+///   <item>v3 — Added care state.</item>
 /// </list>
-/// </para>
 /// </summary>
 public sealed class SaveDataModel
 {
@@ -35,9 +35,9 @@ public sealed class SaveDataModel
 
     /// <summary>
     /// Schema version. Increment on breaking changes.
-    /// Current version: 2.
+    /// Current version: 3.
     /// </summary>
-    public int SchemaVersion { get; set; } = 2;
+    public int SchemaVersion { get; set; } = 3;
 
     // -------------------------------------------------------------------------
     // v1 fields — regression and diaper
@@ -109,6 +109,31 @@ public sealed class SaveDataModel
 
     /// <summary>Last known thirst threshold ID.</summary>
     public string ThirstLastThresholdId { get; set; } = string.Empty;
+
+    // -------------------------------------------------------------------------
+    // v3 fields — care state
+    // -------------------------------------------------------------------------
+
+    /// <summary>
+    /// Absolute day number of the last diaper change.
+    /// Used for dialogue context.
+    /// </summary>
+    public int LastDiaperChangeAbsoluteDay { get; set; } = 0;
+
+    /// <summary>
+    /// Number of care actions performed today. Resets at day start.
+    /// </summary>
+    public int CareActionsToday { get; set; } = 0;
+
+    /// <summary>
+    /// The ID of the last care action performed.
+    /// </summary>
+    public string LastCareActionId { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Absolute day number when CareActionsToday was last reset.
+    /// </summary>
+    public int LastCareDayAbsolute { get; set; } = 0;
 
     // -------------------------------------------------------------------------
     // Additive fields (no schema bump required — safe defaults)

@@ -53,7 +53,7 @@ public sealed class SaveDataMigratorTests
     }
 
     [Fact]
-    public void Migration_V1ToV2_SetsSchemaVersion2()
+    public void Migration_V1ToV3_SetsSchemaVersion3()
     {
         var data = new SaveDataModel
         {
@@ -62,11 +62,11 @@ public sealed class SaveDataMigratorTests
         };
         var migrated = _migrator.Migrate(data);
         migrated.Should().BeTrue();
-        data.SchemaVersion.Should().Be(2);
+        data.SchemaVersion.Should().Be(3);
     }
 
     [Fact]
-    public void Migration_V1ToV2_PreservesExistingFields()
+    public void Migration_V1ToV3_PreservesExistingFields()
     {
         var data = new SaveDataModel
         {
@@ -82,7 +82,7 @@ public sealed class SaveDataMigratorTests
     }
 
     [Fact]
-    public void Migration_V1ToV2_NeedsFieldsHaveSafeDefaults()
+    public void Migration_V1ToV3_NeedsFieldsHaveSafeDefaults()
     {
         var data = new SaveDataModel { SchemaVersion = 1 };
         _migrator.Migrate(data);
@@ -90,6 +90,28 @@ public sealed class SaveDataMigratorTests
         data.HungerNormalized.Should().Be(1.0f);
         data.ThirstNormalized.Should().Be(1.0f);
         data.ContinenceStressModifier.Should().Be(0f);
+    }
+
+    [Fact]
+    public void Migration_V2ToV3_SetsSchemaVersion3()
+    {
+        var data = new SaveDataModel
+        {
+            SchemaVersion  = 2,
+            CurrentStageId = "little"
+        };
+        var migrated = _migrator.Migrate(data);
+        migrated.Should().BeTrue();
+        data.SchemaVersion.Should().Be(3);
+    }
+
+    [Fact]
+    public void Migration_V2ToV3_CareFieldsHaveSafeDefaults()
+    {
+        var data = new SaveDataModel { SchemaVersion = 2 };
+        _migrator.Migrate(data);
+        data.LastDiaperChangeAbsoluteDay.Should().Be(0);
+        data.CareActionsToday.Should().Be(0);
     }
 
     [Fact]
@@ -110,7 +132,7 @@ public sealed class SaveDataMigratorTests
     {
         var original = new SaveDataModel
         {
-            SchemaVersion          = 2,
+            SchemaVersion          = SaveDataMigrator.CurrentSchemaVersion,
             CurrentStageId         = "baby",
             EquippedDiaperTypeId   = "premium",
             DiaperWetness          = 0.45f,
@@ -126,7 +148,10 @@ public sealed class SaveDataMigratorTests
             LastSavedAbsoluteDay   = 55,
             ContinenceNormalized   = 0.6f,
             HungerNormalized       = 0.8f,
-            ThirstNormalized       = 0.7f
+            ThirstNormalized       = 0.7f,
+            LastDiaperChangeAbsoluteDay = 15,
+            CareActionsToday       = 3,
+            LastCareActionId       = "diaper_equipped_premium"
         };
 
         var json     = Newtonsoft.Json.JsonConvert.SerializeObject(original);
@@ -146,5 +171,8 @@ public sealed class SaveDataMigratorTests
             .BeEquivalentTo(original.EquippedAccessories);
         restored.ContinenceNormalized.Should().BeApproximately(
             original.ContinenceNormalized, 0.0001f);
+        restored.LastDiaperChangeAbsoluteDay.Should().Be(original.LastDiaperChangeAbsoluteDay);
+        restored.CareActionsToday.Should().Be(original.CareActionsToday);
+        restored.LastCareActionId.Should().Be(original.LastCareActionId);
     }
 }

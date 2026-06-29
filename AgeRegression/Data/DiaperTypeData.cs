@@ -27,6 +27,12 @@ public sealed class DiaperTypeData
     /// <summary>Item description shown in tooltip.</summary>
     public string Description { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Rarity tier for shop/loot generation.
+    /// Common, uncommon, rare, legendary.
+    /// </summary>
+    public string Rarity { get; set; } = "common";
+
     // -------------------------------------------------------------------------
     // Capacity and absorption
     // -------------------------------------------------------------------------
