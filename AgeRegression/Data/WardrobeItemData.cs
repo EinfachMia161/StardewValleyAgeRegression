@@ -4,7 +4,7 @@ namespace AgeRegression.Data;
 /// Defines a wearable accessory item loaded from
 /// <c>assets/data/wardrobe-items.json</c>.
 /// </summary>
-public sealed class WardrobeItemData
+public sealed class WardrobeItemData : IWardrobeItemDefinition
 {
     /// <summary>
     /// Unique identifier. Used as the accessory slot key and to construct
@@ -70,7 +70,23 @@ public sealed class WardrobeItemData
     public int Price { get; set; } = 25;
 
     /// <summary>
-    /// Sprite index within the mod's accessory sprite sheet.
+    /// Whether this item appears in shops.
+    /// Defaults to <c>true</c> so new items are automatically available.
     /// </summary>
+    public bool ShopAvailable { get; set; } = true;
+
+    /// <summary>
+    /// Unlock condition for this item.
+    /// Absent from JSON → empty <see cref="UnlockRequirement"/> → always unlocked.
+    /// Evaluated by <see cref="Items.ItemUnlockService"/>.
+    /// </summary>
+    public UnlockRequirement Unlock { get; set; } = new();
+
+    /// <summary>Sprite index within the sheet (0-based).</summary>
     public int SpriteIndex { get; set; } = 0;
+
+    /// <summary>
+    /// Sprite sheet path relative to mod root.
+    /// </summary>
+    public string SpriteSheet { get; set; } = "assets/placeholder/sprites.png";
 }

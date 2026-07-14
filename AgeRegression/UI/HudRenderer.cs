@@ -1,4 +1,5 @@
 using AgeRegression.Config;
+using AgeRegression.Data;
 using AgeRegression.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,6 +17,13 @@ public static class HudRenderer
     private const int TitleSize  = 20;
     private const int BodySize   = 14;
 
+    // Sprite constants (64x64 sprites in 13-column grid)
+    internal const int SpriteDim     = 64;
+    internal const int SpriteColumns = 13;
+
+    // Texture path for custom items
+    internal const string PlaceholderSpritesPath = "assets/placeholder/sprites";
+
     /// <summary>
     /// Renders the HUD if <paramref name="hud"/> says it should be visible.
     /// Call from a render hook (e.g. <c>GameLoop.Rendered</c>).
@@ -24,6 +32,9 @@ public static class HudRenderer
     {
         if (hud is null)
             return;
+
+        // Draw diaper icon in standard HUD (below gold display)
+        DrawDiaperIcon(hud, spriteBatch);
 
         if (!hud.ShouldRender())
             return;
@@ -51,6 +62,40 @@ public static class HudRenderer
         bodyY = RenderSection(spriteBatch, "Regression", x + 8 * scale, bodyY, data, cfg.ShowRegressionInfo, scale);
         bodyY = RenderSection(spriteBatch, "Diaper", x + 8 * scale, bodyY, data, cfg.ShowDiaperInfo, scale);
         bodyY = RenderSection(spriteBatch, "Status", x + 8 * scale, bodyY, data, cfg.ShowNeedsInfo, scale);
+    }
+
+    /// <summary>
+    /// Draws the diaper icon in the standard HUD area (top-right, below gold).
+    /// </summary>
+    public static void DrawDiaperIcon(StatusHud hud, SpriteBatch sb)
+    {
+        var data = hud.GetDisplayData();
+        var sprite = data.EquippedDiaperSprite;
+        if (sprite is null)
+            return;
+
+        // Position below gold display (top-right corner)
+        var viewport = Game1.graphics.GraphicsDevice.Viewport;
+        var safeArea = viewport.TitleSafeArea;
+
+        // Position: right side, below the gold amount
+        var iconX = safeArea.Right - SpriteDim - 16;
+        var iconY = safeArea.Top + 16;
+
+        // Resolve the equipped item's own sprite sheet through the shared
+        // texture cache, falling back to the shared sheets for compatibility.
+        var texture = SpriteResolver.LoadTexture(sprite.SpriteSheet)
+            ?? SpriteResolver.LoadTexture(PlaceholderSpritesPath)
+            ?? SpriteResolver.LoadTexture("assets/sprites/diapers");
+        if (texture is null)
+            return;
+
+        // Source rectangle always comes from the SpriteReference pipeline.
+        var srcRect = sprite.GetSourceRectangle(SpriteColumns, SpriteDim);
+
+        var destRect = new Rectangle(iconX, iconY, SpriteDim, SpriteDim);
+
+        sb.Draw(texture, destRect, srcRect, Color.White);
     }
 
     // -------------------------------------------------------------------------

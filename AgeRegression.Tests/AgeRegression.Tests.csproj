@@ -29,6 +29,10 @@
       <HintPath>$(GamePath)\StardewModdingAPI.dll</HintPath>
       <Private>true</Private>
     </Reference>
+    <Reference Include="StardewValley">
+      <HintPath>$(GamePath)\Stardew Valley.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

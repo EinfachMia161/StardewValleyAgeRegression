@@ -152,5 +152,45 @@
       "RegressionStages": [ "little", "middle", "baby" ]
     },
     "Priority": 8
+  },
+  {
+    "Id": "premium_diaper_equipped",
+    "Description": "Wearing a premium diaper",
+    "ValuePerHour": 2.0,
+    "ImmediateValue": 5.0,
+    "Conditions": {
+      "EquippedDiaperIds": [ "premium_diaper" ]
+    },
+    "Priority": 7
+  },
+  {
+    "Id": "luxury_diaper_equipped",
+    "Description": "Wearing a luxury diaper",
+    "ValuePerHour": 5.0,
+    "ImmediateValue": 10.0,
+    "Conditions": {
+      "EquippedDiaperIds": [ "luxury_diaper" ]
+    },
+    "Priority": 7
+  },
+  {
+    "Id": "medical_diaper_equipped",
+    "Description": "Wearing a medical diaper",
+    "ValuePerHour": 3.0,
+    "ImmediateValue": 4.0,
+    "Conditions": {
+      "EquippedDiaperIds": [ "medical_diaper" ]
+    },
+    "Priority": 7
+  },
+  {
+    "Id": "cute_diaper_equipped",
+    "Description": "Wearing a cute diaper",
+    "ValuePerHour": 6.0,
+    "ImmediateValue": 8.0,
+    "Conditions": {
+      "EquippedDiaperIds": [ "cute_diaper" ]
+    },
+    "Priority": 7
   }
 ]

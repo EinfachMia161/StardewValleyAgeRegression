@@ -4,9 +4,11 @@ using AgeRegression.Config;
 using AgeRegression.Data;
 using AgeRegression.Dialogue;
 using AgeRegression.Events;
+using AgeRegression.Integrations;
 using AgeRegression.Items;
 using AgeRegression.Patches;
 using AgeRegression.Persistence;
+using AgeRegression.Shops;
 using AgeRegression.State;
 using AgeRegression.Systems;
 using AgeRegression.UI;
@@ -53,6 +55,9 @@ public sealed class ModEntry : Mod
 
     private ItemRegistry _itemRegistry = null!;
     private ItemFactory _itemFactory = null!;
+    private WardrobeItemResolver _wardrobeItemResolver = null!;
+    private ShopStockProvider _shopStockProvider = null!;
+    private WardrobeShopIntegration _wardrobeShopIntegration = null!;
     private DiaperInteractionHandler _diaperInteractionHandler = null!;
     private AccessoryInteractionHandler _accessoryInteractionHandler = null!;
     private ConsoleCommands _consoleCommands = null!;
@@ -79,12 +84,23 @@ public sealed class ModEntry : Mod
 
         _itemRegistry = new ItemRegistry(_dataLoader, helper, _log);
         _itemFactory = new ItemFactory(_dataLoader, _log);
+        _wardrobeItemResolver = new WardrobeItemResolver(_dataLoader);
+        var gameStateProvider = new StardewGameStateProvider();
+        var unlockService     = new ItemUnlockService(gameStateProvider);
+        var acquisitionService = new ItemAcquisitionService(
+            _wardrobeItemResolver,
+            unlockService,
+            _itemFactory);
+        _shopStockProvider = new ShopStockProvider(_dataLoader, unlockService);
+        _wardrobeShopIntegration = new WardrobeShopIntegration(
+            _shopStockProvider, helper, _log);
 
-        BuildSystems(helper);
+        BuildSystems(helper, unlockService, acquisitionService);
         RegisterProviders();
         RegisterSmApiEvents(helper);
 
         _itemRegistry.Register();
+        _wardrobeShopIntegration.Register();
         _gameEventManager.Register();
         _consoleCommands.Register();
         _patchManager.ApplyAll(
@@ -113,7 +129,10 @@ public sealed class ModEntry : Mod
     // System construction
     // -------------------------------------------------------------------------
 
-    private void BuildSystems(IModHelper helper)
+    private void BuildSystems(
+        IModHelper helper,
+        ItemUnlockService unlockService,
+        ItemAcquisitionService acquisitionService)
     {
         var cfg = _configManager.Config;
 
@@ -170,7 +189,7 @@ public sealed class ModEntry : Mod
             new FileSystemAssetProvider(helper.DirectoryPath, _log),
             helper, _log);
 
-        _patchManager = new PatchManager(helper, _log);
+        _patchManager = new PatchManager(helper, _log, _dataLoader);
 
         _consoleCommands = new ConsoleCommands(
             helper,
@@ -178,7 +197,7 @@ public sealed class ModEntry : Mod
             _diaperSystem,
             _comfortSystem,
             _dataLoader,
-            _itemFactory,
+            acquisitionService,
             _configManager.Config,
             _log);
     }

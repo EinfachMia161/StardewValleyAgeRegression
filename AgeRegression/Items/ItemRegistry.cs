@@ -1,4 +1,5 @@
-﻿using AgeRegression.Utilities;
+using AgeRegression.Data;
+using AgeRegression.Utilities;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley.GameData.Objects;
@@ -12,15 +13,16 @@ namespace AgeRegression.Items;
 ///
 /// <para>
 /// Item definitions are data-driven: the display name, description,
-/// price, and sprite index come from <see cref="DiaperTypeData" /> and
-/// <see cref="WardrobeItemData" />. No item properties are hardcoded
-/// here.
+/// price, and sprite sheet are read from <see cref="IWardrobeItemDefinition"/>.
+/// No item properties are hardcoded here.
 /// </para>
 ///
 /// <para>
-/// Sprite sheets are expected at:
-/// <c>assets/sprites/diapers.png</c> and
-/// <c>assets/sprites/accessories.png</c>.
+/// Sprites are 64x64 pixels in a 13-column grid. Each item's
+/// <c>SpriteSheet</c> and <c>SpriteIndex</c> are resolved at draw time
+/// through <see cref="UI.SpriteReference"/> and
+/// <see cref="UI.SpriteResolver"/>; the source rectangle is never computed
+/// inline.
 /// </para>
 /// </summary>
 public sealed class ItemRegistry
@@ -28,9 +30,6 @@ public sealed class ItemRegistry
     private readonly DataLoader _dataLoader;
     private readonly IModHelper _helper;
     private readonly LogHelper _log;
-
-    private const string DiaperSpritePath    = "assets/sprites/diapers.png";
-    private const string AccessorySpritePath = "assets/sprites/accessories.png";
 
     public ItemRegistry(
         DataLoader dataLoader,
@@ -78,31 +77,13 @@ public sealed class ItemRegistry
     {
         foreach (var diaper in _dataLoader.DiaperTypes)
         {
-            var key = ItemIds.ObjectKey(
-                $"Diaper_{ItemIds.CapitalizeId(diaper.Id)}");
-
-            data[key] = new ObjectData
+            var key = ItemIds.ObjectKey($"Diaper_{ItemIds.CapitalizeId(diaper.Id)}");
+            data[key] = BuildObjectData(diaper, key, new List<string>
             {
-                Name        = key,
-                DisplayName = diaper.DisplayName,
-                Description = diaper.Description,
-                Type        = "Basic",
-                Category    = 0,
-                Price       = diaper.Price,
-                Texture     = _helper.ModContent
-                    .GetInternalAssetName(DiaperSpritePath).Name,
-                SpriteIndex = diaper.SpriteIndex,
-                Edibility   = -300,
-                CanBeGivenAsGift           = false,
-                ExcludeFromShippingCollection = true,
-                ExcludeFromRandomSale      = true,
-                ContextTags = new List<string>
-                {
-                    "mia_age_regression",
-                    "mia_diaper",
-                    $"mia_diaper_{diaper.Id}"
-                }
-            };
+                "mia_age_regression",
+                "mia_diaper",
+                $"mia_diaper_{diaper.Id}"
+            });
         }
     }
 
@@ -110,31 +91,37 @@ public sealed class ItemRegistry
     {
         foreach (var accessory in _dataLoader.WardrobeItems)
         {
-            var key = ItemIds.ObjectKey(
-                $"Accessory_{ItemIds.CapitalizeId(accessory.Id)}");
-
-            data[key] = new ObjectData
+            var key = ItemIds.ObjectKey($"Accessory_{ItemIds.CapitalizeId(accessory.Id)}");
+            data[key] = BuildObjectData(accessory, key, new List<string>
             {
-                Name        = key,
-                DisplayName = accessory.DisplayName,
-                Description = accessory.Description,
-                Type        = "Basic",
-                Category    = 0,
-                Price       = accessory.Price,
-                Texture     = _helper.ModContent
-                    .GetInternalAssetName(AccessorySpritePath).Name,
-                SpriteIndex = accessory.SpriteIndex,
-                Edibility   = -300,
-                CanBeGivenAsGift           = false,
-                ExcludeFromShippingCollection = true,
-                ExcludeFromRandomSale      = true,
-                ContextTags = new List<string>
-                {
-                    "mia_age_regression",
-                    "mia_accessory",
-                    $"mia_accessory_{accessory.Slot}"
-                }
-            };
+                "mia_age_regression",
+                "mia_accessory",
+                $"mia_accessory_{accessory.Slot}"
+            });
         }
     }
+
+    // -------------------------------------------------------------------------
+    // Shared ObjectData construction
+    // -------------------------------------------------------------------------
+
+    private ObjectData BuildObjectData(
+        IWardrobeItemDefinition def,
+        string key,
+        List<string> contextTags) => new()
+    {
+        Name        = key,
+        DisplayName = def.DisplayName,
+        Description = def.Description,
+        Type        = "Basic",
+        Category    = 0,
+        Price       = def.Price,
+        Texture     = _helper.ModContent.GetInternalAssetName(def.SpriteSheet).Name,
+        SpriteIndex = def.SpriteIndex,
+        Edibility   = -300,
+        CanBeGivenAsGift              = false,
+        ExcludeFromShippingCollection = true,
+        ExcludeFromRandomSale         = true,
+        ContextTags = contextTags
+    };
 }

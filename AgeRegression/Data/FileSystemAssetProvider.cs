@@ -41,7 +41,7 @@ public sealed class FileSystemAssetProvider : IAssetProvider
 
         try
         {
-            return JsonConvert.DeserializeObject<T>(raw);
+            return JsonConvert.DeserializeObject<T>(raw, AssetJson.Settings);
         }
         catch (Exception ex)
         {

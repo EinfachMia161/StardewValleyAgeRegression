@@ -1,4 +1,5 @@
-﻿using AgeRegression.Systems;
+﻿using AgeRegression.Data;
+using AgeRegression.Systems;
 using AgeRegression.Utilities;
 using HarmonyLib;
 using StardewModdingAPI;
@@ -14,12 +15,14 @@ public sealed class PatchManager
 {
     private readonly IModHelper _helper;
     private readonly LogHelper _log;
+    private readonly DataLoader _dataLoader;
     private Harmony? _harmony;
 
-    public PatchManager(IModHelper helper, LogHelper log)
+    public PatchManager(IModHelper helper, LogHelper log, DataLoader dataLoader)
     {
         _helper = helper;
         _log    = log;
+        _dataLoader = dataLoader;
     }
 
     /// <summary>
@@ -36,6 +39,7 @@ public sealed class PatchManager
         FarmerStaminaPatch.Initialize(regressionSystem, _log);
         FarmerExperiencePatch.Initialize(regressionSystem, _log);
         NpcDialoguePatch.Initialize(npcReactionSystem, _log);
+        ObjectRenderPatch.Initialize(_dataLoader, _log);
 
         try
         {

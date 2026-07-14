@@ -9,7 +9,7 @@ namespace AgeRegression.Items;
 /// state. All item creation goes through this factory — callers never
 /// construct items directly.
 /// </summary>
-public sealed class ItemFactory
+public sealed class ItemFactory : IItemFactory
 {
     private readonly DataLoader _dataLoader;
     private readonly LogHelper _log;
@@ -115,4 +115,24 @@ public sealed class ItemFactory
         _log.Debug("Created accessory item '{0}'.", qualifiedId);
         return item;
     }
+
+    // -------------------------------------------------------------------------
+    // Resolver-based creation
+    // -------------------------------------------------------------------------
+
+    /// <summary>
+    /// Creates a runtime item from a pre-resolved wardrobe item.
+    /// Diaper items use default booster=false and currentAbsoluteDay=0.
+    /// Returns <c>null</c> if item creation fails.
+    /// </summary>
+    public StardewValley.Object? CreateFromResolved(
+        ResolvedWardrobeItem resolved,
+        bool hasBooster = false,
+        int currentAbsoluteDay = 0) =>
+        resolved.Category switch
+        {
+            WardrobeCategory.Diaper    => CreateDiaper(resolved.ItemId, hasBooster, currentAbsoluteDay),
+            WardrobeCategory.Accessory => CreateAccessory(resolved.ItemId),
+            _                          => null
+        };
 }

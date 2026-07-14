@@ -103,6 +103,39 @@ public class StatusHudTests
         data.Comfort.Should().Be(0f);
         data.Mood.Should().Be("Neutral");
         data.Continence.Should().Be(0f);
+        data.EquippedDiaperSprite.Should().BeNull();
+    }
+
+    // -------------------------------------------------------------------------
+    // HudDisplayData — equipped sprite reference
+    // -------------------------------------------------------------------------
+
+    [Fact]
+    public void HudDisplayData_EquippedDiaperSprite_CarriesOwnSheetAndIndex()
+    {
+        var sprite = new SpriteReference("assets/sprites/diapers", 5);
+
+        var data = new HudDisplayData
+        {
+            EquippedDiaperTypeId = "premium_diaper",
+            EquippedDiaperSprite  = sprite
+        };
+
+        data.EquippedDiaperSprite.Should().NotBeNull();
+        data.EquippedDiaperSprite!.SpriteSheet.Should().Be("assets/sprites/diapers");
+        data.EquippedDiaperSprite.SpriteIndex.Should().Be(5);
+    }
+
+    [Fact]
+    public void HudDisplayData_EquippedDiaperSprite_IsNull_WhenNoDiaper()
+    {
+        var data = new HudDisplayData
+        {
+            EquippedDiaperTypeId = null,
+            EquippedDiaperSprite  = null
+        };
+
+        data.EquippedDiaperSprite.Should().BeNull();
     }
 
     // -------------------------------------------------------------------------

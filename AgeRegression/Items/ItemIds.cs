@@ -154,4 +154,33 @@ public static class ItemIds
         var raw = qualifiedId[AccessoryPrefix.Length..];
         return raw.Length > 0 ? raw.ToLowerInvariant() : null;
     }
+
+    /// <summary>
+    /// Returns true if this item is a custom diaper or accessory item.
+    /// </summary>
+    public static bool IsCustomItem(StardewValley.Object obj) =>
+        obj.modData.ContainsKey(ModDataDiaperTypeId) ||
+        obj.modData.ContainsKey(ModDataAccessoryTypeId);
+
+    /// <summary>
+    /// Gets the type of custom item.
+    /// </summary>
+    public static CustomItemType GetCustomItemType(StardewValley.Object obj)
+    {
+        if (obj.modData.ContainsKey(ModDataDiaperTypeId))
+            return CustomItemType.Diaper;
+        if (obj.modData.ContainsKey(ModDataAccessoryTypeId))
+            return CustomItemType.Accessory;
+        return CustomItemType.None;
+    }
+}
+
+/// <summary>
+/// Types of custom items that need special rendering.
+/// </summary>
+public enum CustomItemType
+{
+    None,
+    Diaper,
+    Accessory
 }

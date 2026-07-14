@@ -32,6 +32,8 @@ public sealed class StatusHud
     private float _cachedComfort;
     private string _cachedMood = "Neutral";
     private float _cachedContinence;
+    private string? _cachedEquippedDiaperTypeId;
+    private SpriteReference? _cachedEquippedDiaperSprite;
 
     public StatusHud(
         StateManager stateManager,
@@ -100,14 +102,16 @@ public sealed class StatusHud
     {
         return new HudDisplayData
         {
-            StageName         = _cachedStageName,
-            ProgressPercent   = _cachedProgressPercent,
-            DiaperCondition   = _cachedDiaperCondition,
-            WetnessPercent    = _cachedWetnessPercent,
-            MessingPercent    = _cachedMessingPercent,
-            Comfort           = _cachedComfort,
-            Mood              = _cachedMood,
-            Continence        = _cachedContinence
+            StageName           = _cachedStageName,
+            ProgressPercent     = _cachedProgressPercent,
+            DiaperCondition     = _cachedDiaperCondition,
+            WetnessPercent      = _cachedWetnessPercent,
+            MessingPercent      = _cachedMessingPercent,
+            Comfort             = _cachedComfort,
+            Mood                = _cachedMood,
+            Continence          = _cachedContinence,
+            EquippedDiaperTypeId = _cachedEquippedDiaperTypeId,
+            EquippedDiaperSprite = _cachedEquippedDiaperSprite
         };
     }
 
@@ -159,6 +163,21 @@ public sealed class StatusHud
         _cachedDiaperCondition = e.NewState.ConditionId;
         _cachedWetnessPercent  = e.NewState.WetnessLevel * 100f;
         _cachedMessingPercent  = e.NewState.MessingLevel * 100f;
+
+        // Cache diaper type (including its sprite sheet) for the HUD icon
+        if (e.NewState.EquippedDiaperTypeId is not null)
+        {
+            var diaperType = _dataLoader.GetDiaperType(e.NewState.EquippedDiaperTypeId);
+            _cachedEquippedDiaperTypeId = e.NewState.EquippedDiaperTypeId;
+            _cachedEquippedDiaperSprite = diaperType is null
+                ? null
+                : new SpriteReference(diaperType.SpriteSheet, diaperType.SpriteIndex);
+        }
+        else
+        {
+            _cachedEquippedDiaperTypeId = null;
+            _cachedEquippedDiaperSprite = null;
+        }
     }
 
     private void OnComfortChanged(ComfortChangedEventArgs e)
@@ -233,6 +252,21 @@ public sealed class StatusHud
 
         // Continence from needs
         _cachedContinence = state.Needs.Continence.Value.Normalized * 100f;
+
+        // Cache diaper type (including its sprite sheet) for the HUD icon
+        if (state.Diaper.EquippedDiaperTypeId is not null)
+        {
+            var diaperType = _dataLoader.GetDiaperType(state.Diaper.EquippedDiaperTypeId);
+            _cachedEquippedDiaperTypeId = state.Diaper.EquippedDiaperTypeId;
+            _cachedEquippedDiaperSprite = diaperType is null
+                ? null
+                : new SpriteReference(diaperType.SpriteSheet, diaperType.SpriteIndex);
+        }
+        else
+        {
+            _cachedEquippedDiaperTypeId = null;
+            _cachedEquippedDiaperSprite = null;
+        }
     }
 }
 
@@ -249,4 +283,13 @@ public sealed class HudDisplayData
     public float Comfort { get; init; }
     public string Mood { get; init; } = "Neutral";
     public float Continence { get; init; }
+    public string? EquippedDiaperTypeId { get; init; }
+
+    /// <summary>
+    /// Sprite reference for the equipped diaper's HUD icon. Derived from the
+    /// diaper type's own <c>SpriteSheet</c> and <c>SpriteIndex</c> so the HUD
+    /// renders through the same pipeline as world/inventory/held items.
+    /// <c>null</c> when no diaper is equipped.
+    /// </summary>
+    public SpriteReference? EquippedDiaperSprite { get; init; }
 }

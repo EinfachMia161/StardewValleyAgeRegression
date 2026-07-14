@@ -23,7 +23,7 @@ public sealed class ConsoleCommands
     private readonly DiaperSystem _diaperSystem;
     private readonly ComfortSystem _comfortSystem;
     private readonly DataLoader _dataLoader;
-    private readonly ItemFactory _itemFactory;
+    private readonly ItemAcquisitionService _acquisitionService;
     private readonly ModConfig _config;
     private readonly LogHelper _log;
 
@@ -33,7 +33,7 @@ public sealed class ConsoleCommands
         DiaperSystem diaperSystem,
         ComfortSystem comfortSystem,
         DataLoader dataLoader,
-        ItemFactory itemFactory,
+        ItemAcquisitionService acquisitionService,
         ModConfig config,
         LogHelper log)
     {
@@ -41,10 +41,10 @@ public sealed class ConsoleCommands
         _stateManager  = stateManager;
         _diaperSystem  = diaperSystem;
         _comfortSystem = comfortSystem;
-        _dataLoader    = dataLoader;
-        _itemFactory   = itemFactory;
-        _config        = config;
-        _log           = log;
+        _dataLoader          = dataLoader;
+        _acquisitionService  = acquisitionService;
+        _config              = config;
+        _log                 = log;
     }
 
     /// <summary>Registers all commands with SMAPI. Call once during Entry.</summary>
@@ -58,14 +58,26 @@ public sealed class ConsoleCommands
             CmdStage);
 
         _helper.ConsoleCommands.Add(
+            "age_regression give",
+            "Gives the player any wardrobe item (diaper or accessory).\n" +
+            "Usage: age_regression give <itemId> [booster:true|false]\n" +
+            "Diaper IDs: " + ValidDiaperIds() + "\n" +
+            "Accessory IDs: " + ValidAccessoryIds(),
+            CmdGive);
+
+        // Deprecated: use 'age_regression give <itemId>' instead.
+        _helper.ConsoleCommands.Add(
             "age_regression.give_diaper",
+            "[Deprecated] Use 'age_regression give <itemId>'.\n" +
             "Gives the player a diaper item. Optionally include a booster.\n" +
             "Usage: age_regression.give_diaper <diaperId> [true|false]\n" +
             "Valid IDs: " + ValidDiaperIds(),
             CmdGiveDiaper);
 
+        // Deprecated: use 'age_regression give <itemId>' instead.
         _helper.ConsoleCommands.Add(
             "age_regression.give_accessory",
+            "[Deprecated] Use 'age_regression give <itemId>'.\n" +
             "Gives the player an accessory item.\n" +
             "Usage: age_regression.give_accessory <accessoryId>\n" +
             "Valid IDs: " + ValidAccessoryIds(),
@@ -123,6 +135,64 @@ public sealed class ConsoleCommands
             Error($"Stage transition failed for '{stageId}'. Check SMAPI log.");
     }
 
+    private void CmdGive(string cmd, string[] args)
+    {
+        if (!AssertWorldReady()) return;
+
+        if (args.Length < 1)
+        {
+            Error("Usage: age_regression give <itemId> [booster:true|false]");
+            Info("Diaper IDs: " + ValidDiaperIds());
+            Info("Accessory IDs: " + ValidAccessoryIds());
+            return;
+        }
+
+        var itemId     = args[0].Trim().ToLowerInvariant();
+        var hasBooster = args.Length >= 2 &&
+                         bool.TryParse(args[1], out var b) && b;
+
+        var result = _acquisitionService.Acquire(
+            itemId,
+            new AcquisitionContext(
+                Source: AcquisitionSource.Console,
+                HasBooster: hasBooster,
+                CurrentAbsoluteDay: AbsoluteDayHelper.GetCurrentAbsoluteDay()));
+
+        if (!result.Success)
+        {
+            switch (result.FailureReason)
+            {
+                case AcquisitionFailureReason.UnknownItem:
+                    Error($"Unknown item ID '{itemId}'.");
+                    Info("Diaper IDs: " + ValidDiaperIds());
+                    Info("Accessory IDs: " + ValidAccessoryIds());
+                    break;
+                case AcquisitionFailureReason.Locked:
+                    Error($"Item '{itemId}' is currently locked.");
+                    break;
+                case AcquisitionFailureReason.CreationFailed:
+                    Error($"ItemFactory returned null for '{itemId}'. Check SMAPI log.");
+                    break;
+                default:
+                    Error($"Acquisition failed for '{itemId}'.");
+                    break;
+            }
+            return;
+        }
+
+        if (result.CreatedItem is null || result.ResolvedItem is null)
+        {
+            Error($"Acquisition returned no item for '{itemId}'.");
+            return;
+        }
+
+        Game1.player.addItemByMenuIfNecessary(result.CreatedItem);
+        var suffix = result.ResolvedItem.Category == WardrobeCategory.Diaper && hasBooster
+            ? " (with booster)." : ".";
+        Ok($"Gave {result.ResolvedItem.Category.ToString().ToLowerInvariant()} '{itemId}'{suffix}");
+    }
+
+    // Deprecated: use CmdGive via 'age_regression give <itemId>' instead.
     private void CmdGiveDiaper(string cmd, string[] args)
     {
         if (!AssertWorldReady()) return;
@@ -138,26 +208,45 @@ public sealed class ConsoleCommands
         var hasBooster = args.Length >= 2 &&
                          bool.TryParse(args[1], out var b) && b;
 
-        if (_dataLoader.GetDiaperType(diaperId) is null)
+        var result = _acquisitionService.Acquire(
+            diaperId,
+            new AcquisitionContext(
+                Source: AcquisitionSource.Console,
+                HasBooster: hasBooster,
+                CurrentAbsoluteDay: AbsoluteDayHelper.GetCurrentAbsoluteDay()));
+
+        if (!result.Success)
         {
-            Error($"Unknown diaper type '{diaperId}'.");
-            Info("Valid IDs: " + ValidDiaperIds());
+            switch (result.FailureReason)
+            {
+                case AcquisitionFailureReason.UnknownItem:
+                    Error($"Unknown diaper type '{diaperId}'.");
+                    Info("Valid IDs: " + ValidDiaperIds());
+                    break;
+                case AcquisitionFailureReason.Locked:
+                    Error($"Diaper '{diaperId}' is currently locked.");
+                    break;
+                case AcquisitionFailureReason.CreationFailed:
+                    Error($"ItemFactory returned null for '{diaperId}'. Check SMAPI log.");
+                    break;
+                default:
+                    Error($"Acquisition failed for '{diaperId}'.");
+                    break;
+            }
             return;
         }
 
-        var item = _itemFactory.CreateDiaper(
-            diaperId, hasBooster, AbsoluteDayHelper.GetCurrentAbsoluteDay());
-
-        if (item is null)
+        if (result.CreatedItem is null)
         {
-            Error($"ItemFactory returned null for '{diaperId}'. Check SMAPI log.");
+            Error($"Acquisition returned no item for '{diaperId}'.");
             return;
         }
 
-        Game1.player.addItemByMenuIfNecessary(item);
+        Game1.player.addItemByMenuIfNecessary(result.CreatedItem);
         Ok($"Gave diaper '{diaperId}'" + (hasBooster ? " (with booster)." : "."));
     }
 
+    // Deprecated: use CmdGive via 'age_regression give <itemId>' instead.
     private void CmdGiveAccessory(string cmd, string[] args)
     {
         if (!AssertWorldReady()) return;
@@ -171,22 +260,38 @@ public sealed class ConsoleCommands
 
         var accessoryId = args[0].Trim().ToLowerInvariant();
 
-        if (_dataLoader.GetWardrobeItem(accessoryId) is null)
+        var result = _acquisitionService.Acquire(
+            accessoryId,
+            new AcquisitionContext(Source: AcquisitionSource.Console));
+
+        if (!result.Success)
         {
-            Error($"Unknown accessory '{accessoryId}'.");
-            Info("Valid IDs: " + ValidAccessoryIds());
+            switch (result.FailureReason)
+            {
+                case AcquisitionFailureReason.UnknownItem:
+                    Error($"Unknown accessory '{accessoryId}'.");
+                    Info("Valid IDs: " + ValidAccessoryIds());
+                    break;
+                case AcquisitionFailureReason.Locked:
+                    Error($"Accessory '{accessoryId}' is currently locked.");
+                    break;
+                case AcquisitionFailureReason.CreationFailed:
+                    Error($"ItemFactory returned null for '{accessoryId}'. Check SMAPI log.");
+                    break;
+                default:
+                    Error($"Acquisition failed for '{accessoryId}'.");
+                    break;
+            }
             return;
         }
 
-        var item = _itemFactory.CreateAccessory(accessoryId);
-
-        if (item is null)
+        if (result.CreatedItem is null)
         {
-            Error($"ItemFactory returned null for '{accessoryId}'. Check SMAPI log.");
+            Error($"Acquisition returned no item for '{accessoryId}'.");
             return;
         }
 
-        Game1.player.addItemByMenuIfNecessary(item);
+        Game1.player.addItemByMenuIfNecessary(result.CreatedItem);
         Ok($"Gave accessory '{accessoryId}'.");
     }
 

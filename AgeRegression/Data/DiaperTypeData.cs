@@ -9,7 +9,7 @@ namespace AgeRegression.Data;
 /// modifier provider and event architectures.
 /// </para>
 /// </summary>
-public sealed class DiaperTypeData
+public sealed class DiaperTypeData : IWardrobeItemDefinition
 {
     // -------------------------------------------------------------------------
     // Identity
@@ -34,6 +34,21 @@ public sealed class DiaperTypeData
     public string Rarity { get; set; } = "common";
 
     // -------------------------------------------------------------------------
+    // Sprite
+    // -------------------------------------------------------------------------
+
+    /// <summary>
+    /// Sprite sheet path relative to mod root.
+    /// </summary>
+    public string SpriteSheet { get; set; } = "assets/placeholder/sprites.png";
+
+    /// <summary>
+    /// Sprite index within the sheet (0-based).
+    /// Rectangle: x = (index % 13) * 64, y = (index / 13) * 64
+    /// </summary>
+    public int SpriteIndex { get; set; } = 0;
+
+    // -------------------------------------------------------------------------
     // Capacity and absorption
     // -------------------------------------------------------------------------
 
@@ -44,7 +59,7 @@ public sealed class DiaperTypeData
     public float MaxCapacity { get; set; } = 100f;
 
     /// <summary>
-    /// Absorption rate multiplier (0.0–2.0).
+    /// Absorption rate multiplier (0.0ï¿½2.0).
     /// Values above 1.0 mean the diaper absorbs wetness more efficiently,
     /// reducing the visible wetness level increase per accident.
     /// Values below 1.0 mean the diaper absorbs less efficiently.
@@ -57,13 +72,13 @@ public sealed class DiaperTypeData
     // -------------------------------------------------------------------------
 
     /// <summary>
-    /// Thickness rating (1–5). Higher values may trigger NPC comments
+    /// Thickness rating (1ï¿½5). Higher values may trigger NPC comments
     /// and affect movement speed via <see cref="ThicknessSpeedPenalty"/>.
     /// </summary>
     public int Thickness { get; set; } = 2;
 
     /// <summary>
-    /// Padding rating (1–5). Influences comfort bonus and capacity.
+    /// Padding rating (1ï¿½5). Influences comfort bonus and capacity.
     /// </summary>
     public int Padding { get; set; } = 2;
 
@@ -92,12 +107,12 @@ public sealed class DiaperTypeData
     /// <summary>
     /// Multiplier applied to <see cref="EquipComfortBonus"/> when computing
     /// the comfort bonus for a diaper change (as opposed to a first equip).
-    /// Range: 0.0–1.0. Default 0.8 = 80% of the equip bonus.
+    /// Range: 0.0ï¿½1.0. Default 0.8 = 80% of the equip bonus.
     ///
     /// <para>
     /// Rationale: a diaper change provides comfort but slightly less than
     /// putting on a fresh diaper for the first time. This value allows
-    /// per-type tuning — a premium diaper might have a higher ratio because
+    /// per-type tuning ï¿½ a premium diaper might have a higher ratio because
     /// the change experience is more comfortable.
     /// </para>
     /// </summary>
@@ -130,7 +145,7 @@ public sealed class DiaperTypeData
     /// Multiplier applied to the continence drain rate while wearing this
     /// diaper. Values below 1.0 reduce drain (the security of wearing a
     /// diaper slows continence loss). Values above 1.0 increase drain.
-    /// Range: 0.5–1.5. Default 0.9 = 10% reduction in drain rate.
+    /// Range: 0.5ï¿½1.5. Default 0.9 = 10% reduction in drain rate.
     /// </summary>
     public float ContinenceDrainMultiplier { get; set; } = 0.9f;
 
@@ -138,9 +153,19 @@ public sealed class DiaperTypeData
     // Item metadata
     // -------------------------------------------------------------------------
 
-    /// <summary>Sprite index within the mod's diaper sprite sheet.</summary>
-    public int SpriteIndex { get; set; } = 0;
-
     /// <summary>Sell price in gold.</summary>
     public int Price { get; set; } = 50;
+
+    /// <summary>
+    /// Whether this item appears in shops.
+    /// Defaults to <c>true</c> so new items are automatically available.
+    /// </summary>
+    public bool ShopAvailable { get; set; } = true;
+
+    /// <summary>
+    /// Unlock condition for this item.
+    /// Absent from JSON â†’ empty <see cref="UnlockRequirement"/> â†’ always unlocked.
+    /// Evaluated by <see cref="Items.ItemUnlockService"/>.
+    /// </summary>
+    public UnlockRequirement Unlock { get; set; } = new();
 }

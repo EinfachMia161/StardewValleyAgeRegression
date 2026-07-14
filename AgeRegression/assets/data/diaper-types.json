@@ -15,9 +15,11 @@
     "CleanComfortPerHour": 3.0,
     "SaturatedComfortPenalty": 20.0,
     "ContinenceDrainMultiplier": 0.9,
+    "SpriteSheet": "assets/placeholder/sprites.png",
     "SpriteIndex": 0,
     "Price": 50,
-    "Rarity": "common"
+    "Rarity": "common",
+    "ShopAvailable": true
   },
   {
     "Id": "soft_diaper",
@@ -35,9 +37,11 @@
     "CleanComfortPerHour": 4.0,
     "SaturatedComfortPenalty": 25.0,
     "ContinenceDrainMultiplier": 0.95,
-    "SpriteIndex": 3,
+    "SpriteSheet": "assets/placeholder/sprites.png",
+    "SpriteIndex": 1,
     "Price": 80,
-    "Rarity": "common"
+    "Rarity": "common",
+    "ShopAvailable": true
   },
   {
     "Id": "premium_diaper",
@@ -55,9 +59,11 @@
     "CleanComfortPerHour": 5.0,
     "SaturatedComfortPenalty": 15.0,
     "ContinenceDrainMultiplier": 0.8,
-    "SpriteIndex": 1,
+    "SpriteSheet": "assets/placeholder/sprites.png",
+    "SpriteIndex": 2,
     "Price": 120,
-    "Rarity": "rare"
+    "Rarity": "rare",
+    "ShopAvailable": true
   },
   {
     "Id": "overnight_diaper",
@@ -75,9 +81,11 @@
     "CleanComfortPerHour": 4.0,
     "SaturatedComfortPenalty": 10.0,
     "ContinenceDrainMultiplier": 0.85,
-    "SpriteIndex": 4,
+    "SpriteSheet": "assets/placeholder/sprites.png",
+    "SpriteIndex": 3,
     "Price": 150,
-    "Rarity": "uncommon"
+    "Rarity": "uncommon",
+    "ShopAvailable": true
   },
   {
     "Id": "training_diaper",
@@ -95,9 +103,11 @@
     "CleanComfortPerHour": 1.5,
     "SaturatedComfortPenalty": 25.0,
     "ContinenceDrainMultiplier": 0.95,
-    "SpriteIndex": 2,
+    "SpriteSheet": "assets/placeholder/sprites.png",
+    "SpriteIndex": 4,
     "Price": 30,
-    "Rarity": "common"
+    "Rarity": "common",
+    "ShopAvailable": true
   },
   {
     "Id": "cute_diaper",
@@ -115,9 +125,11 @@
     "CleanComfortPerHour": 6.0,
     "SaturatedComfortPenalty": 18.0,
     "ContinenceDrainMultiplier": 0.9,
+    "SpriteSheet": "assets/placeholder/sprites.png",
     "SpriteIndex": 5,
     "Price": 100,
-    "Rarity": "uncommon"
+    "Rarity": "uncommon",
+    "ShopAvailable": true
   },
   {
     "Id": "medical_diaper",
@@ -135,9 +147,11 @@
     "CleanComfortPerHour": 2.0,
     "SaturatedComfortPenalty": 5.0,
     "ContinenceDrainMultiplier": 0.75,
+    "SpriteSheet": "assets/placeholder/sprites.png",
     "SpriteIndex": 6,
     "Price": 200,
-    "Rarity": "rare"
+    "Rarity": "rare",
+    "ShopAvailable": false
   },
   {
     "Id": "luxury_diaper",
@@ -155,8 +169,10 @@
     "CleanComfortPerHour": 8.0,
     "SaturatedComfortPenalty": 12.0,
     "ContinenceDrainMultiplier": 0.85,
+    "SpriteSheet": "assets/placeholder/sprites.png",
     "SpriteIndex": 7,
     "Price": 500,
-    "Rarity": "legendary"
+    "Rarity": "legendary",
+    "ShopAvailable": false
   }
 ]

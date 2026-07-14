@@ -40,7 +40,7 @@ internal sealed class InMemoryAssetProvider : IAssetProvider
     {
         if (!_files.TryGetValue(relativePath, out var json))
             return null;
-        return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(json);
+        return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(json, AgeRegression.Data.AssetJson.Settings);
     }
 
     public string? LoadRaw(string absolutePath) =>

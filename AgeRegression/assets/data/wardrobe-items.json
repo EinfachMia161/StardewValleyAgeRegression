@@ -8,6 +8,8 @@
     "SpeedModifier": 1.0,
     "MinStageOrder": 0,
     "Price": 30,
+    "ShopAvailable": true,
+    "SpriteSheet": "assets/placeholder/sprites.png",
     "SpriteIndex": 0
   },
   {
@@ -19,6 +21,8 @@
     "SpeedModifier": 1.0,
     "MinStageOrder": 0,
     "Price": 25,
+    "ShopAvailable": true,
+    "SpriteSheet": "assets/placeholder/sprites.png",
     "SpriteIndex": 1
   },
   {
@@ -30,6 +34,8 @@
     "SpeedModifier": 1.0,
     "MinStageOrder": 1,
     "Price": 20,
+    "ShopAvailable": false,
+    "SpriteSheet": "assets/placeholder/sprites.png",
     "SpriteIndex": 2
   },
   {
@@ -41,6 +47,8 @@
     "SpeedModifier": 1.0,
     "MinStageOrder": 0,
     "Price": 15,
+    "ShopAvailable": true,
+    "SpriteSheet": "assets/placeholder/sprites.png",
     "SpriteIndex": 3
   },
   {
@@ -52,6 +60,30 @@
     "SpeedModifier": 0.95,
     "MinStageOrder": 0,
     "Price": 50,
+    "ShopAvailable": true,
+    "SpriteSheet": "assets/placeholder/sprites.png",
     "SpriteIndex": 4
+  },
+  {
+    "Id": "penny_gift",
+    "DisplayName": "Penny's Knitted Bib",
+    "Description": "A bib knitted by Penny. Only available once you're close friends.",
+    "Slot": "bib",
+    "ComfortBonus": 6.0,
+    "SpeedModifier": 1.0,
+    "MinStageOrder": 0,
+    "Price": 0,
+    "ShopAvailable": false,
+    "SpriteSheet": "assets/placeholder/sprites.png",
+    "SpriteIndex": 4,
+    "Unlock": {
+      "Conditions": [
+        {
+          "Type": "Friendship",
+          "Npc": "Penny",
+          "Points": 1000
+        }
+      ]
+    }
   }
 ]
